@@ -1757,3 +1757,231 @@ body {
     padding: 1rem;
   }
 }
+
+
+/* ============================================
+   CINEMATIC COURSE INTRO — 8s Overlay
+   ============================================ */
+
+@keyframes introZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.15); }
+}
+
+@keyframes introFadeUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes introProgress {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+@keyframes introPulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+.course-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.course-intro--leaving {
+  animation: fadeOut 0.6s ease forwards;
+}
+
+@keyframes fadeOut {
+  to { opacity: 0; }
+}
+
+.course-intro__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  animation: introZoom 8s ease-out forwards;
+  filter: brightness(0.3) saturate(1.3);
+}
+
+.course-intro__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 15, 30, 0.4) 0%,
+    rgba(10, 15, 30, 0.85) 60%,
+    rgba(10, 15, 30, 0.95) 100%
+  );
+}
+
+.course-intro__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 700px;
+  padding: 2rem;
+}
+
+.course-intro__category {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #f59e0b;
+  margin-bottom: 1rem;
+  animation: introFadeUp 0.8s ease 0.3s both;
+}
+
+.course-intro__number {
+  font-family: 'Outfit', sans-serif;
+  font-size: 5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #345eae, #f56d52);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  animation: introFadeUp 0.8s ease 0.6s both;
+}
+
+.course-intro__title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  line-height: 1.3;
+  margin: 0 0 1rem;
+  animation: introFadeUp 0.8s ease 1s both;
+}
+
+.course-intro__desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: #8b9bb4;
+  line-height: 1.6;
+  margin: 0 0 2rem;
+  animation: introFadeUp 0.8s ease 1.4s both;
+}
+
+.course-intro__skip {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.3);
+  animation: introPulse 2s ease infinite, introFadeUp 0.8s ease 2s both;
+}
+
+.course-intro__progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.course-intro__progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #345eae, #f56d52);
+  animation: introProgress 8s linear forwards;
+}
+
+
+/* ============================================
+   HERO IMAGE BANNER — Course Detail
+   ============================================ */
+
+.course-detail__hero-image {
+  position: relative;
+  width: calc(100% + 2rem);
+  margin: 0 -1rem 0;
+  height: 220px;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.course-detail__hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s ease;
+}
+
+.course-detail__hero-image:hover img {
+  transform: scale(1.03);
+}
+
+.course-detail__hero-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(10, 15, 30, 0.6) 70%,
+    rgba(10, 15, 30, 0.95) 100%
+  );
+  pointer-events: none;
+}
+
+
+/* ============================================
+   HOME CARD IMAGES — Thumbnail on cards
+   ============================================ */
+
+.card__image {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px 12px 0 0;
+  margin: -1.5rem -1.5rem 1rem -1.5rem;
+  width: calc(100% + 3rem);
+  display: block;
+}
+
+
+/* ============================================
+   RESPONSIVE — Intro & Hero Image
+   ============================================ */
+
+@media (max-width: 768px) {
+  .course-intro__number {
+    font-size: 3.5rem;
+  }
+
+  .course-intro__title {
+    font-size: 1.3rem;
+  }
+
+  .course-intro__desc {
+    font-size: 0.9rem;
+  }
+
+  .course-detail__hero-image {
+    height: 160px;
+  }
+}
+
+@media (max-width: 480px) {
+  .course-intro__number {
+    font-size: 2.5rem;
+  }
+
+  .course-intro__title {
+    font-size: 1.1rem;
+  }
+
+  .course-detail__hero-image {
+    height: 120px;
+    border-radius: 12px;
+  }
+}

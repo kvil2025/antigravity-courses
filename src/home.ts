@@ -178,6 +178,7 @@ function renderCourseCards(): void {
     card.dataset.index = String(index);
 
     card.innerHTML = `
+      <img src="${course.image}" alt="${course.title}" class="card__image" loading="lazy" />
       <div class="course-card__number">
         <span>${String(course.id).padStart(2, '0')}</span>
         ${checkSvg}

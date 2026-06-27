@@ -28,6 +28,7 @@ export interface CourseMeta {
   title: string;
   description: string;
   icon: string;
+  image: string;
   category: string;
   link: string;
 }

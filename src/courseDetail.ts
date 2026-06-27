@@ -115,7 +115,34 @@ export async function renderCourseDetail(id: number): Promise<void> {
   const isCompleted = completedSet.has(id);
   const currentMode = getViewMode();
 
+  const categoryLabels: Record<string, string> = {
+    foundations: '🚀 Fundamentos',
+    intermediate: '⚙️ Intermedio',
+    advanced: '🔬 Avanzado',
+    mastery: '🏆 Maestría',
+  };
+
+  // Check if intro was already seen this session
+  const introKey = `agy-intro-seen-${id}`;
+  const introSeen = sessionStorage.getItem(introKey);
+
   app.innerHTML = `
+    ${!introSeen ? `
+    <!-- Cinematic Intro Overlay -->
+    <div class="course-intro" id="course-intro">
+      <div class="course-intro__bg" style="background-image: url('${meta.image}')"></div>
+      <div class="course-intro__overlay"></div>
+      <div class="course-intro__content">
+        <div class="course-intro__category">${categoryLabels[meta.category] || meta.category}</div>
+        <div class="course-intro__number">${String(id).padStart(2, '0')}</div>
+        <h1 class="course-intro__title">${meta.title}</h1>
+        <p class="course-intro__desc">${meta.description}</p>
+        <div class="course-intro__skip">Click para continuar · Se cierra automáticamente</div>
+      </div>
+      <div class="course-intro__progress"><div class="course-intro__progress-bar"></div></div>
+    </div>
+    ` : ''}
+
     <div class="container course-detail">
       <!-- Top Nav -->
       <nav class="course-detail__nav">
@@ -127,6 +154,12 @@ export async function renderCourseDetail(id: number): Promise<void> {
           <span class="course-detail__counter">${id} / ${courseMeta.length}</span>
         </div>
       </nav>
+
+      <!-- Hero Image Banner -->
+      <div class="course-detail__hero-image">
+        <img src="${meta.image}" alt="${meta.title}" loading="eager" />
+        <div class="course-detail__hero-image-overlay"></div>
+      </div>
 
       <!-- Hero -->
       <header class="course-detail__hero">
@@ -483,6 +516,18 @@ function setupDetailEvents(id: number, content: CourseContent): void {
 
   // Scroll to top
   window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // Cinematic intro handler
+  const intro = document.getElementById('course-intro');
+  if (intro) {
+    const dismiss = () => {
+      intro.classList.add('course-intro--leaving');
+      sessionStorage.setItem(`agy-intro-seen-${id}`, '1');
+      setTimeout(() => intro.remove(), 600);
+    };
+    intro.addEventListener('click', dismiss);
+    setTimeout(dismiss, 8000);
+  }
 
   // Scroll-reveal sections
   const observer = new IntersectionObserver(
