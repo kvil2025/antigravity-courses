@@ -323,7 +323,7 @@ export async function renderCourseDetail(id: number): Promise<void> {
       <!-- Footer -->
       <footer class="footer" style="animation-delay: 0.2s">
         <p class="footer__credit">
-          Diseñado por <strong>Carlos Ávila Elgueta</strong> · Powered by Google Antigravity
+          Diseñado por <strong>Cristian Avila Cisternas</strong> · by <strong>Tecknologia Spa</strong> · Powered by Google Antigravity
         </p>
       </footer>
     </div>

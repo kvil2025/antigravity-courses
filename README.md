@@ -52,4 +52,4 @@ Este proyecto se despliega automáticamente en **Vercel** al hacer push a `main`
 
 ---
 
-Diseñado por **Carlos Ávila Elgueta** · Powered by Google Antigravity
+Diseñado por **Cristian Avila Cisternas** · by **Tecknologia Spa** · Powered by Google Antigravity

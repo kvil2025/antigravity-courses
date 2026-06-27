@@ -130,7 +130,7 @@ export function renderHome(): void {
           </button>
         </div>
         <p class="footer__credit">
-          Diseñado por <strong>Carlos Ávila Elgueta</strong> · Powered by Google Antigravity
+          Diseñado por <strong>Cristian Avila Cisternas</strong> · by <strong>Tecknologia Spa</strong> · Powered by Google Antigravity
         </p>
       </footer>
     </div>
