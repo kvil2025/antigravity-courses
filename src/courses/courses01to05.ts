@@ -20,6 +20,42 @@ export const courses01to05: Record<number, CourseContent> = {
     ],
     estimatedTime: '2 horas',
     difficulty: 'Principiante',
+    simpleSummary: 'Imagina que tienes un asistente super inteligente que puede escribir código por ti. Este curso te enseña a instalarlo, configurarlo y darle tus primeras instrucciones. Al final, sabrás cómo pedirle cosas en lenguaje natural y él se encargará de crear archivos, ejecutar programas y verificar que todo funcione.',
+    quiz: [
+      {
+        question: '¿Cuál es la principal diferencia entre Antigravity y un autocompletado de código tradicional?',
+        options: [
+          'Antigravity solo sugiere líneas de código más largas',
+          'Antigravity ejecuta acciones reales como crear archivos, correr comandos y verificar resultados',
+          'Antigravity requiere que escribas el código manualmente y solo lo revisa',
+          'Antigravity funciona solo con Python, no con otros lenguajes',
+        ],
+        correctIndex: 1,
+        explanation: 'Antigravity es un agente autónomo que va mucho más allá de sugerir código. Puede leer archivos, ejecutar comandos, crear ramas y desplegar aplicaciones — todo desde una conversación en lenguaje natural.',
+      },
+      {
+        question: '¿Para qué sirve el archivo AGENTS.md en un proyecto?',
+        options: [
+          'Para guardar las contraseñas del proyecto de forma segura',
+          'Para definir las rutas de navegación de la aplicación web',
+          'Para personalizar el comportamiento del agente con reglas persistentes del proyecto',
+          'Para compilar el código TypeScript automáticamente',
+        ],
+        correctIndex: 2,
+        explanation: 'El archivo AGENTS.md contiene reglas que el agente siempre respeta: stack tecnológico, convenciones de código, restricciones, etc. Es tu mecanismo principal de personalización a nivel de proyecto.',
+      },
+      {
+        question: '¿Qué rol adopta el desarrollador en el paradigma Agent-First?',
+        options: [
+          'Sigue escribiendo todo el código manualmente',
+          'Se convierte en arquitecto y supervisor, describiendo intención en vez de implementar',
+          'Solo puede usar el agente para tareas de testing',
+          'Debe aprender un nuevo lenguaje de programación especial',
+        ],
+        correctIndex: 1,
+        explanation: 'En el paradigma Agent-First, tu rol evoluciona de implementador a arquitecto y supervisor. Describes qué quieres lograr y el agente se encarga de la implementación.',
+      },
+    ],
     sections: [
       {
         id: 'c1s1',
@@ -49,6 +85,16 @@ export const courses01to05: Record<number, CourseContent> = {
   La plataforma soporta múltiples modelos de lenguaje (Gemini 2.5 Pro, Flash, etc.) y se
   integra nativamente con VS Code, terminales y navegadores Chrome.
 </p>`,
+        simpleContent: `<p>Piensa en Antigravity como un <strong>compañero de trabajo que sabe programar</strong>. Tú le dices <strong>qué</strong> quieres lograr — como "necesito una página web para mi negocio" — y él se encarga de escribir todo el código necesario.</p>
+<p>A diferencia de un buscador como Google que solo te da información, Antigravity <strong>hace el trabajo por ti</strong>: crea archivos, instala programas, y prueba que todo funcione.</p>
+<ul>
+  <li>Es como tener un <strong>programador junior muy rápido</strong> al que tú le das instrucciones</li>
+  <li>Tú te conviertes en el <strong>jefe del proyecto</strong> — decides qué hacer, él lo ejecuta</li>
+  <li>Funciona con una simple conversación, como hablar por chat con un colega</li>
+</ul>`,
+        exercise: `<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Explícame qué herramientas tienes disponibles y dame un ejemplo de cada una"</div>
+<div class="exercise-success">✅ Si el agente te lista herramientas como view_file, run_command, write_to_file y te explica para qué sirve cada una — ¡completaste el ejercicio!</div>`,
         tip: 'Antigravity no es solo un autocompletado avanzado — es un compañero de desarrollo que ejecuta. Piensa en él como un desarrollador junior muy rápido al que puedes supervisar.',
       },
       {
@@ -99,6 +145,14 @@ touch .gemini/settings.json</code></pre>
   permitidos en el sandbox, y las restricciones de red. Siempre activa el sandbox en
   proyectos de producción para evitar ejecuciones accidentales.
 </p>`,
+        simpleContent: `<p>Instalar Antigravity es como <strong>instalar cualquier aplicación</strong> — solo necesitas una línea en la terminal y listo. Piensa en la terminal como la "ventana de comandos" de tu computador.</p>
+<p>Después de instalar, creas una <strong>carpeta de configuración</strong> dentro de tu proyecto. Es como crear una "carpeta de preferencias" donde le dices al agente:</p>
+<ul>
+  <li>Qué modelo de IA usar (como elegir entre un asistente junior o senior)</li>
+  <li>Qué comandos tiene permitido ejecutar (como darle permisos limitados a un empleado nuevo)</li>
+  <li>Qué restricciones de seguridad aplicar (para que no haga nada peligroso)</li>
+</ul>
+<p>Una vez configurado, ya puedes empezar a darle instrucciones al agente.</p>`,
         tip: 'Configura allowedCommands con los comandos específicos de tu stack. Esto acelera la ejecución porque el agente no necesita pedir permiso cada vez.',
         warning: 'Nunca desactives el sandbox en proyectos con datos sensibles. El agente puede ejecutar comandos destructivos si se lo pides.',
       },
@@ -146,6 +200,18 @@ AGENTE (internamente):
   Como usuario, no necesitas escribir tool calls manualmente — el agente las genera
   automáticamente basándose en tu instrucción en lenguaje natural.
 </p>`,
+        simpleContent: `<p>Hablar con Antigravity es como <strong>darle instrucciones a un asistente por chat</strong>. Pero a diferencia de ChatGPT que solo te responde con texto, Antigravity <strong>realmente hace las cosas</strong>.</p>
+<p>Imagina que le dices: "Crea un botón para mi página web". El agente:</p>
+<ul>
+  <li>Primero <strong>investiga</strong> tu proyecto para entender el contexto</li>
+  <li>Luego <strong>crea los archivos</strong> necesarios</li>
+  <li>Después <strong>prueba</strong> que el botón funcione correctamente</li>
+  <li>Si algo falla, lo <strong>corrige solo</strong> sin pedirte ayuda</li>
+</ul>
+<p>Es como enviar un mensaje de WhatsApp a un colega diciendo "hazme esto" y que te responda "listo, ya está hecho y funcionando".</p>`,
+        exercise: `<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Crea un archivo llamado hola-mundo.html con una página web que diga 'Hola Mundo' con un diseño bonito y moderno"</div>
+<div class="exercise-success">✅ Si el agente crea el archivo y puedes abrirlo en tu navegador viendo una página web con el texto — ¡completaste el ejercicio!</div>`,
         tip: 'Sé específico en tus instrucciones iniciales. En lugar de "crea un botón", di "crea un componente Button con variantes, tipos TypeScript estrictos y tests con Vitest".',
       },
       {
@@ -186,6 +252,14 @@ AGENTE (internamente):
   análisis, o reportes de errores. Se guardan en un directorio dedicado y aparecen
   como documentos navegables en la interfaz.
 </p>`,
+        simpleContent: `<p>Cuando el agente te responde, su respuesta tiene <strong>4 partes</strong>, como un informe de trabajo:</p>
+<ul>
+  <li><strong>Pensamiento:</strong> El agente analiza tu pedido (como cuando un empleado lee un email y piensa cómo resolver el tema)</li>
+  <li><strong>Acciones:</strong> Lo que realmente hizo — crear archivos, ejecutar programas, etc.</li>
+  <li><strong>Resultados:</strong> Qué pasó con cada acción — si funcionó o si hubo problemas</li>
+  <li><strong>Resumen:</strong> Una explicación en español de todo lo que hizo y por qué</li>
+</ul>
+<p>No necesitas entender todos los detalles técnicos. El <strong>resumen final</strong> es lo más importante — ahí el agente te cuenta en lenguaje simple qué logró.</p>`,
         warning: 'Si el agente ejecuta un comando que parece incorrecto, puedes rechazarlo en la UI antes de que se ejecute. Siempre revisa los run_command en proyectos de producción.',
       },
       {
@@ -255,6 +329,15 @@ AGENTE (internamente):
   reglas específicas del proyecto, o en <code>~/.gemini/config/AGENTS.md</code> para
   reglas globales que aplican a todos tus proyectos.
 </p>`,
+        simpleContent: `<p>Pasar del desarrollo tradicional a Agent-First es como pasar de <strong>cocinar tú mismo a ser el chef que dirige la cocina</strong>. Antes hacías todo manualmente; ahora le dices a tu equipo (el agente) qué platos preparar.</p>
+<ul>
+  <li><strong>Antes:</strong> Tú escribías cada línea de código, buscabas errores uno por uno, y probabas todo manualmente</li>
+  <li><strong>Ahora:</strong> Tú describes qué necesitas, el agente programa, prueba y corrige automáticamente</li>
+</ul>
+<p>El archivo <strong>AGENTS.md</strong> es como un "manual de la casa" — le dice al agente las reglas de tu proyecto: qué tecnologías usar, qué convenciones seguir, y qué tiene prohibido hacer.</p>`,
+        exercise: `<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Crea un archivo AGENTS.md en la raíz del proyecto con reglas básicas: usar TypeScript, no usar 'any', y siempre verificar que compile antes de terminar"</div>
+<div class="exercise-success">✅ Si el agente crea el archivo AGENTS.md con las reglas especificadas — ¡completaste el ejercicio!</div>`,
         tip: 'Invierte tiempo en escribir un AGENTS.md detallado. Es la inversión con mayor retorno — cada instrucción que pongas ahí se aplica automáticamente a todas las conversaciones futuras.',
       },
     ],
@@ -284,6 +367,42 @@ AGENTE (internamente):
     ],
     estimatedTime: '2.5 horas',
     difficulty: 'Principiante',
+    simpleSummary: 'Antigravity tiene dos modos de trabajo: uno donde ves todo lo que hace en tiempo real (como mirar por encima del hombro de un colega) y otro donde le delegas una tarea grande y él trabaja solo en segundo plano (como enviar a alguien a hacer un encargo). Este curso te enseña cuándo usar cada uno para ser más productivo.',
+    quiz: [
+      {
+        question: '¿Cuándo es más apropiado usar Editor View en vez de Manager View?',
+        options: [
+          'Cuando necesitas implementar una feature completa con más de 10 archivos',
+          'Cuando quieres corregir un bug específico y ver cada cambio en tiempo real',
+          'Cuando necesitas generar documentación completa del proyecto',
+          'Cuando la tarea va a tomar más de 30 minutos',
+        ],
+        correctIndex: 1,
+        explanation: 'Editor View es ideal para cambios quirúrgicos y localizados donde necesitas supervisión visual en tiempo real. Para tareas grandes o de larga duración, Manager View es más apropiado.',
+      },
+      {
+        question: '¿Qué comando activa Manager View con máxima exhaustividad?',
+        options: [
+          '/edit',
+          '/background',
+          '/goal',
+          '/manager',
+        ],
+        correctIndex: 2,
+        explanation: 'El comando /goal es la forma principal de activar Manager View. Le indica al agente que debe ser exhaustivo y no detenerse hasta completar todo el objetivo.',
+      },
+      {
+        question: '¿Cuál es el ciclo de trabajo recomendado combinando ambas vistas?',
+        options: [
+          'Implementar → Testear → Documentar → Deployar',
+          'Plan → Implementar → Revisar → Validar',
+          'Diseñar → Codificar → Compilar → Publicar',
+          'Analizar → Escribir → Ejecutar → Borrar',
+        ],
+        correctIndex: 1,
+        explanation: 'El ciclo recomendado es Plan (Editor View) → Implementar (Manager View) → Revisar (Editor View) → Validar (Manager View). Esto aprovecha las fortalezas de cada superficie.',
+      },
+    ],
     sections: [
       {
         id: 'c2s1',
@@ -320,6 +439,12 @@ AGENTE (internamente):
   La mayoría de los desarrolladores profesionales usan <strong>ambas superficies
   simultáneamente</strong>, alternando según el contexto de la tarea.
 </p>`,
+        simpleContent: `<p>Antigravity tiene <strong>dos formas de trabajar</strong>, como dos modos de un asistente:</p>
+<ul>
+  <li><strong>Modo "a tu lado" (Editor View):</strong> Es como tener a alguien sentado junto a ti, mostrándote cada cambio antes de hacerlo. Tú ves todo y puedes decir "sí" o "no" a cada paso.</li>
+  <li><strong>Modo "delegado" (Manager View):</strong> Es como enviar a alguien a hacer un encargo completo. Le dices qué necesitas y te avisa cuando termina, con un reporte de todo lo que hizo.</li>
+</ul>
+<p>La mayoría de los profesionales usan <strong>ambos modos</strong> según la situación — el modo "a tu lado" para cosas pequeñas y el modo "delegado" para proyectos grandes.</p>`,
       },
       {
         id: 'c2s2',
@@ -360,6 +485,17 @@ AGENTE (Editor View):
   <strong>Limitación:</strong> Editor View procesa las tareas secuencialmente. Si necesitas
   que el agente trabaje en múltiples tareas simultáneamente, usa Manager View.
 </p>`,
+        simpleContent: `<p>El <strong>Editor View</strong> es como tener un asistente sentado a tu lado que te <strong>muestra cada cambio</strong> antes de hacerlo.</p>
+<ul>
+  <li>Ves exactamente qué archivos está tocando</li>
+  <li>Puedes <strong>aceptar o rechazar</strong> cada cambio individual</li>
+  <li>Es perfecto para correcciones pequeñas y precisas</li>
+  <li>Funciona como un "pair programming" con IA</li>
+</ul>
+<p>Piensa en ello como revisar un documento de Google Docs donde tu colega hace cambios en tiempo real y tú puedes aceptar o rechazar cada sugerencia.</p>`,
+        exercise: `<div class="exercise-prompt">Abre Antigravity en modo Editor View y escribe:</div>
+<div class="exercise-code">"Busca todas las funciones en este proyecto que no tengan comentarios de documentación y agrégales un comentario descriptivo"</div>
+<div class="exercise-success">✅ Si el agente encuentra funciones sin documentar y te muestra los cambios propuestos para cada una — ¡completaste el ejercicio!</div>`,
         tip: 'Usa Editor View cuando necesites entender cada cambio que el agente hace. Es especialmente útil para código crítico de producción donde quieres revisar línea por línea.',
       },
       {
@@ -408,6 +544,17 @@ AGENTE (Editor View):
   hizo: archivos creados, tests ejecutados, errores encontrados y decisiones tomadas.
   Revisa este documento para validar el trabajo antes de hacer merge.
 </p>`,
+        simpleContent: `<p>El <strong>Manager View</strong> es como <strong>enviar a alguien a hacer un proyecto completo</strong> sin necesidad de supervisarlo paso a paso.</p>
+<ul>
+  <li>Tú defines el objetivo general: "necesito un sistema de login completo"</li>
+  <li>El agente trabaja <strong>en segundo plano</strong> — puedes hacer otras cosas mientras tanto</li>
+  <li>Al terminar, te entrega un <strong>reporte completo</strong> de todo lo que hizo</li>
+  <li>Puede trabajar por 20-30 minutos sin necesitar tu atención</li>
+</ul>
+<p>Es como enviar un email a un colega con un pedido detallado y recibir la respuesta "Listo, te adjunto todo terminado y testeado".</p>`,
+        exercise: `<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"/goal Crea una página web simple con un formulario de contacto que tenga campos para nombre, email y mensaje. Incluye validación de campos y un diseño moderno con CSS. Verifica que funcione abriendo el archivo."</div>
+<div class="exercise-success">✅ Si el agente trabaja de forma autónoma, crea los archivos, y al final te muestra un reporte de lo que hizo — ¡completaste el ejercicio!</div>`,
         warning: 'Manager View ejecuta tareas sin pedir confirmación intermedia. Asegúrate de que tu AGENTS.md tenga restricciones claras para evitar cambios no deseados.',
       },
       {
@@ -469,6 +616,13 @@ AGENTE (Editor View):
   Si no estás seguro, empieza con Editor View. Siempre puedes escalar a Manager View
   si la tarea resulta más compleja de lo esperado.
 </p>`,
+        simpleContent: `<p>Elegir el modo correcto es como decidir entre <strong>cocinar tú mismo o pedir delivery</strong>:</p>
+<ul>
+  <li><strong>Editor View</strong> (cocinar tú): Para cosas pequeñas donde quieres controlar cada detalle — corregir un error, cambiar un nombre, revisar código</li>
+  <li><strong>Manager View</strong> (pedir delivery): Para proyectos grandes donde solo necesitas el resultado final — crear una feature completa, migrar tecnología, generar documentación</li>
+</ul>
+<p><strong>Regla simple:</strong> Si el cambio toca menos de 5 archivos, usa Editor View. Si toca más de 5 o toma más de 10 minutos, usa Manager View.</p>
+<p>¿No estás seguro? Empieza con Editor View — siempre puedes cambiar al otro modo si la tarea crece.</p>`,
         tip: 'Manager View es ideal para tareas que harías "overnight" — implementaciones grandes que no necesitas supervisar en tiempo real.',
       },
       {
@@ -512,6 +666,14 @@ AGENTE: [Ejecuta en background, reporta resultados]</code></pre>
   para la escala. Dominar esta alternancia es lo que distingue a un usuario
   avanzado de Antigravity.
 </p>`,
+        simpleContent: `<p>Los profesionales combinan ambos modos en un <strong>ciclo de 4 pasos</strong>, como dirigir un equipo de trabajo:</p>
+<ul>
+  <li><strong>Paso 1 — Planificar</strong> (Editor View): Le pides al agente que analice la situación y proponga un plan</li>
+  <li><strong>Paso 2 — Implementar</strong> (Manager View): Le das luz verde y trabaja en segundo plano creando todo</li>
+  <li><strong>Paso 3 — Revisar</strong> (Editor View): Revisas los detalles importantes y pides ajustes puntuales</li>
+  <li><strong>Paso 4 — Validar</strong> (Manager View): Le pides que ejecute todas las pruebas y verifique que todo funciona</li>
+</ul>
+<p>Es como un director de proyecto que: planifica → delega → revisa → aprueba.</p>`,
         tip: 'Guarda tus prompts más efectivos en un archivo prompts.md dentro del proyecto. Así puedes reutilizarlos y refinarlos con el tiempo.',
       },
     ],
@@ -542,6 +704,42 @@ AGENTE: [Ejecuta en background, reporta resultados]</code></pre>
     ],
     estimatedTime: '3.5 horas',
     difficulty: 'Intermedio',
+    simpleSummary: 'Imagina que en vez de tener un solo asistente, puedes tener un equipo completo trabajando al mismo tiempo. Uno diseña la interfaz, otro programa el servidor, y otro escribe las pruebas — todos en paralelo. Este curso te enseña a orquestar ese equipo de agentes IA para multiplicar tu productividad.',
+    quiz: [
+      {
+        question: '¿Cuál es la diferencia entre los modos de workspace "inherit" y "branch"?',
+        options: [
+          'inherit usa más memoria que branch',
+          'branch permite que el subagente trabaje en una copia aislada sin afectar al agente padre',
+          'inherit es más lento que branch',
+          'branch solo funciona con subagentes de tipo "self"',
+        ],
+        correctIndex: 1,
+        explanation: 'Con "branch", el subagente trabaja en una copia aislada del workspace. Los cambios no afectan al padre hasta que se haga merge. "inherit" comparte el mismo directorio y los cambios son inmediatamente visibles para ambos.',
+      },
+      {
+        question: '¿Cuándo es mejor definir un subagente personalizado en vez de usar el tipo "self"?',
+        options: [
+          'Siempre — los subagentes personalizados son más rápidos',
+          'Solo cuando necesitas que el subagente use un lenguaje de programación diferente',
+          'Cuando necesitas restricciones específicas (como solo lectura) o un system prompt especializado',
+          'Nunca — el tipo "self" es suficiente para todas las tareas',
+        ],
+        correctIndex: 2,
+        explanation: 'Los subagentes personalizados son útiles cuando necesitas restricciones específicas (como deshabilitar herramientas de escritura para auditorías) o un system prompt que enfoque al agente en una tarea concreta.',
+      },
+      {
+        question: '¿Necesitas hacer polling para saber cuándo termina un subagente?',
+        options: [
+          'Sí, debes verificar el estado cada 30 segundos',
+          'No, el sistema te notifica automáticamente cuando el subagente termina',
+          'Sí, pero solo en Manager View',
+          'Depende del tipo de workspace que uses',
+        ],
+        correctIndex: 1,
+        explanation: 'El sistema notifica automáticamente cuando un subagente termina. No necesitas hacer polling — simplemente continúa con otras tareas y recibirás la notificación cuando el subagente reporte sus resultados.',
+      },
+    ],
     sections: [
       {
         id: 'c3s1',
@@ -579,6 +777,17 @@ AGENTE: [Ejecuta en background, reporta resultados]</code></pre>
   implementa el frontend, otro puede trabajar en el backend simultáneamente, reduciendo
   el tiempo total de desarrollo.
 </p>`,
+        simpleContent: `<p>Imagina que eres el <strong>director de una empresa</strong> y puedes contratar asistentes especializados para diferentes tareas:</p>
+<ul>
+  <li>Uno se dedica al <strong>diseño visual</strong> de tu aplicación</li>
+  <li>Otro se encarga de la <strong>parte técnica del servidor</strong></li>
+  <li>Un tercero escribe la <strong>documentación</strong></li>
+</ul>
+<p>Todos trabajan <strong>al mismo tiempo</strong>, cada uno en su propia mesa de trabajo, y te reportan cuando terminan. El agente principal es como el gerente que coordina a todo el equipo.</p>
+<p>El resultado: un proyecto que tomaría 3 horas con un solo asistente se puede completar en 1 hora con tres trabajando en paralelo.</p>`,
+        exercise: `<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Lista todos los subagentes activos en este momento y explícame qué tipos de subagentes puedo invocar"</div>
+<div class="exercise-success">✅ Si el agente te explica la diferencia entre subagentes tipo 'self' y personalizados, y te muestra cómo invocarlos — ¡completaste el ejercicio!</div>`,
         tip: 'La arquitectura Multi-Agent es especialmente poderosa para proyectos con separación clara de responsabilidades (frontend/backend, features independientes).',
       },
       {
@@ -635,6 +844,13 @@ AGENTE: [Ejecuta en background, reporta resultados]</code></pre>
   <code>inherit</code> para tareas de solo lectura, <code>branch</code> para
   implementaciones paralelas, y <code>share</code> para trabajo en ramas diferentes.
 </p>`,
+        simpleContent: `<p>El "workspace" es el <strong>escritorio de trabajo</strong> de cada asistente. Hay tres opciones:</p>
+<ul>
+  <li><strong>Compartido (inherit):</strong> Todos trabajan en la misma mesa. Si uno mueve algo, los demás lo ven inmediatamente. Útil cuando solo necesitan leer archivos.</li>
+  <li><strong>Aislado (branch):</strong> Cada uno tiene su propia copia del escritorio. Trabajan sin molestarse mutuamente. Perfecto cuando varios modifican archivos al mismo tiempo.</li>
+  <li><strong>Semi-compartido (share):</strong> Comparten el mismo archivador pero cada uno tiene su propio cajón. Ahorra espacio pero mantiene la independencia.</li>
+</ul>
+<p>La regla simple: si solo van a <strong>leer</strong>, usa compartido. Si van a <strong>modificar archivos</strong>, usa aislado para evitar conflictos.</p>`,
         warning: 'Cuando usas workspace "branch", los cambios del subagente NO se fusionan automáticamente. Debes revisar y hacer merge manualmente o indicar al agente padre que lo haga.',
       },
       {
@@ -688,6 +904,12 @@ invoke_subagent({
   específicas</strong> (como solo lectura) o un <strong>system prompt especializado</strong>
   que enfoque al agente en una tarea concreta.
 </p>`,
+        simpleContent: `<p>Hay dos formas de crear asistentes especializados:</p>
+<ul>
+  <li><strong>Clon genérico (self):</strong> Es como contratar a alguien con las mismas habilidades que tú. Puede hacer de todo — leer, escribir, ejecutar. Es la opción rápida.</li>
+  <li><strong>Especialista personalizado:</strong> Es como contratar a un experto con un perfil específico. Por ejemplo, un "auditor de seguridad" que solo puede <strong>leer y reportar</strong>, no modificar nada.</li>
+</ul>
+<p>Los especialistas son útiles cuando quieres que alguien analice tu trabajo sin riesgo de que lo modifique accidentalmente — como contratar a un inspector que solo revisa pero no toca.</p>`,
         tip: 'Define subagentes de solo lectura (enable_write_tools: false) para tareas de análisis y auditoría. Esto garantiza que no modificarán tu código accidentalmente.',
       },
       {
@@ -742,6 +964,17 @@ invoke_subagent({
   termina. <strong>No necesitas hacer polling</strong> — simplemente continúa con otras
   tareas o espera las notificaciones.
 </p>`,
+        simpleContent: `<p>La paralelización es como <strong>dividir un proyecto entre varios miembros del equipo</strong> para que todo se haga más rápido:</p>
+<ul>
+  <li>Un asistente diseña la <strong>interfaz visual</strong></li>
+  <li>Otro construye la <strong>parte del servidor</strong></li>
+  <li>Un tercero prepara las <strong>pruebas de calidad</strong></li>
+</ul>
+<p>Todos trabajan <strong>al mismo tiempo</strong>. Lo importante es que las tareas sean independientes — si una depende de la otra, no se pueden paralelizar.</p>
+<p>Cuando cada uno termina, el sistema te avisa automáticamente. No necesitas estar preguntando "¿ya terminaste?" — es como recibir una notificación en el celular.</p>`,
+        exercise: `<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Invoca dos subagentes en paralelo: uno que analice la estructura de este proyecto y otro que cuente cuántos archivos hay por tipo (ts, tsx, css, etc.). Ambos en modo inherit."</div>
+<div class="exercise-success">✅ Si el agente crea dos subagentes, ambos trabajan simultáneamente, y recibes los reportes de cada uno — ¡completaste el ejercicio!</div>`,
         warning: 'No paralelices tareas que modifican los mismos archivos. Usa workspace "branch" si hay riesgo de conflicto y revisa los merges cuidadosamente.',
       },
       {
@@ -805,6 +1038,14 @@ manage_subagents({ Action: "kill_all" })</code></pre>
   Cuando un subagente es terminado, sus workspaces <code>branch</code> se eliminan
   automáticamente, pero los logs y artefactos se preservan para referencia futura.
 </p>`,
+        simpleContent: `<p>Los subagentes se comunican con el agente principal usando <strong>mensajes</strong>, como un equipo que usa Slack o WhatsApp grupal:</p>
+<ul>
+  <li><strong>Reporte final:</strong> Cada asistente envía un resumen cuando termina — "Listo, creé estos 3 archivos y todas las pruebas pasaron"</li>
+  <li><strong>Actualizaciones de progreso:</strong> En tareas largas, envían avisos periódicos — "Voy por la mitad, todo bien"</li>
+  <li><strong>Instrucciones adicionales:</strong> El jefe puede enviar nuevas instrucciones a un asistente que ya está trabajando</li>
+  <li><strong>Cadena de trabajo:</strong> Un asistente termina y pasa su resultado al siguiente para que continúe</li>
+</ul>
+<p>También puedes <strong>despedir</strong> (terminar) subagentes que ya no necesitas. Sus archivos de trabajo se borran pero los reportes se guardan.</p>`,
         tip: 'Usa el patrón Pipeline cuando las tareas tienen dependencias secuenciales: investigar → diseñar → implementar → testear. Cada fase la ejecuta un subagente diferente.',
       },
     ],
@@ -835,6 +1076,42 @@ manage_subagents({ Action: "kill_all" })</code></pre>
     ],
     estimatedTime: '3 horas',
     difficulty: 'Intermedio',
+    simpleSummary: 'Antes de que un arquitecto construya un edificio, primero muestra los planos al cliente. Este curso te enseña a usar los "artefactos" de Antigravity — documentos donde el agente te muestra su plan antes de ejecutarlo. Así puedes revisar, aprobar o pedir cambios antes de que toque una sola línea de código.',
+    quiz: [
+      {
+        question: '¿Qué propiedad del artefacto activa el botón "Proceed" para aprobación humana?',
+        options: [
+          'UserFacing: true',
+          'RequestFeedback: true',
+          'ApprovalRequired: true',
+          'WaitForUser: true',
+        ],
+        correctIndex: 1,
+        explanation: 'La propiedad RequestFeedback: true en el metadata del artefacto hace que aparezca un botón "Proceed" que el usuario debe presionar para autorizar la ejecución del plan.',
+      },
+      {
+        question: '¿Cuál es la principal ventaja de una Task List sobre un Implementation Plan?',
+        options: [
+          'La Task List es más corta y fácil de leer',
+          'La Task List permite rastrear el progreso paso a paso con checkboxes actualizados automáticamente',
+          'La Task List se genera más rápido',
+          'La Task List no necesita aprobación del usuario',
+        ],
+        correctIndex: 1,
+        explanation: 'Las Task Lists están diseñadas para rastrear progreso con checkboxes que el agente actualiza automáticamente. Ofrecen visibilidad, reanudabilidad y trazabilidad durante implementaciones multi-paso.',
+      },
+      {
+        question: '¿Qué contiene un Walkthrough document?',
+        options: [
+          'Solo el código fuente de los archivos creados',
+          'Un resumen de lo implementado, decisiones técnicas, errores resueltos y cómo verificar el resultado',
+          'Las instrucciones originales del usuario sin cambios',
+          'Una lista de bugs pendientes sin resolver',
+        ],
+        correctIndex: 1,
+        explanation: 'Un Walkthrough es documentación automática post-implementación que incluye: resumen ejecutivo, archivos creados/modificados, decisiones técnicas, errores encontrados y resueltos, y comandos para verificar el resultado.',
+      },
+    ],
     sections: [
       {
         id: 'c4s1',
@@ -871,6 +1148,14 @@ manage_subagents({ Action: "kill_all" })</code></pre>
   oportunidad de revisar, ajustar y aprobar planes antes de que se materialicen
   en cambios de código.
 </p>`,
+        simpleContent: `<p>Los <strong>artefactos</strong> son como <strong>documentos formales</strong> que el agente genera para mostrarte información importante de forma organizada.</p>
+<p>Piensa en ellos como los <strong>entregables de un consultor</strong>: informes bonitos con tablas, diagramas y secciones bien estructuradas que se guardan permanentemente.</p>
+<ul>
+  <li>Se guardan como archivos que puedes consultar cuando quieras</li>
+  <li>Pueden incluir tablas, diagramas, código y alertas con colores</li>
+  <li>Algunos tienen un <strong>botón "Proceed"</strong> que te permite aprobar un plan antes de que se ejecute</li>
+</ul>
+<p>Es la forma que tiene el agente de decirte: "Esto es lo que pienso hacer — ¿te parece bien?"</p>`,
         tip: 'Pide al agente que genere artefactos cuando necesites una visión general antes de ejecutar: "Genera un plan como artefacto antes de implementar".',
       },
       {
@@ -927,6 +1212,17 @@ Cloud Messaging (FCM) integrado al frontend React existente.
   dependencias entre tareas, y riesgos identificados. Esto te permite <strong>detectar
   problemas antes de escribir una sola línea de código</strong>.
 </p>`,
+        simpleContent: `<p>Un <strong>Implementation Plan</strong> es como los <strong>planos de un arquitecto</strong> — muestra exactamente qué se va a construir antes de poner un solo ladrillo.</p>
+<p>Incluye:</p>
+<ul>
+  <li><strong>Fases del trabajo</strong> con tiempos estimados (como un cronograma de obra)</li>
+  <li><strong>Lista de archivos</strong> que se van a crear o modificar</li>
+  <li><strong>Riesgos identificados</strong> que podrían causar problemas</li>
+</ul>
+<p>La ventaja es que puedes detectar errores en el plan <strong>antes de que se escriba una sola línea de código</strong>. Es mucho más barato cambiar un plano que demoler una pared.</p>`,
+        exercise: `<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Genera un Implementation Plan como artefacto con RequestFeedback: true para agregar un modo oscuro a este proyecto. NO lo implementes todavía — solo muestra el plan."</div>
+<div class="exercise-success">✅ Si el agente genera un artefacto con fases, archivos a modificar, y un botón "Proceed" — ¡completaste el ejercicio!</div>`,
         warning: 'No saltes la fase de planificación en features que afectan más de 10 archivos. Un plan de 5 minutos puede ahorrarte horas de refactoring.',
       },
       {
@@ -975,6 +1271,14 @@ Cloud Messaging (FCM) integrado al frontend React existente.
   agente trabaja autónomamente y tú puedes consultar el progreso en cualquier momento
   revisando el artefacto actualizado.
 </p>`,
+        simpleContent: `<p>Las <strong>Task Lists</strong> son como una <strong>lista de tareas con checkboxes</strong> que el agente va marcando automáticamente a medida que avanza.</p>
+<p>Imagina un tablero Trello o una lista de tareas donde ves:</p>
+<ul>
+  <li>✅ Tareas completadas (con palomita verde)</li>
+  <li>⬜ Tareas pendientes (sin marcar)</li>
+  <li>📊 Barra de progreso (ej: "3 de 8 completadas — 37%")</li>
+</ul>
+<p>La mejor parte: si la conversación se interrumpe, el agente puede <strong>retomar exactamente donde quedó</strong> leyendo la Task List. Es como guardar la partida en un videojuego.</p>`,
         tip: 'Pide al agente que cree una Task List antes de empezar: "Antes de implementar, genera una task list y actualiza los checkboxes a medida que completes cada paso".',
       },
       {
@@ -1023,6 +1327,17 @@ write_to_file({
   un plan con aprobación antes de ejecutar cambios que afecten más de cierto
   número de archivos.
 </p>`,
+        simpleContent: `<p>El <strong>flujo de aprobación</strong> es como cuando un contratista te muestra los planos y te dice: <strong>"¿Apruebas esto antes de que empecemos a construir?"</strong></p>
+<ol>
+  <li>El agente genera un documento con su plan detallado</li>
+  <li>Te aparece un <strong>botón "Proceed"</strong> (continuar)</li>
+  <li>Tú revisas, haces preguntas o pides cambios</li>
+  <li>Cuando presionas el botón, el agente ejecuta el plan aprobado</li>
+</ol>
+<p>Úsalo para cosas <strong>importantes o difíciles de revertir</strong>: migraciones de datos, cambios de arquitectura, o cualquier cosa que afecte la producción. Es tu seguro contra errores costosos.</p>`,
+        exercise: `<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Quiero que analices todos los archivos CSS de este proyecto y propongas mejoras de organización como artefacto con RequestFeedback: true. NO ejecutes los cambios hasta que yo apruebe."</div>
+<div class="exercise-success">✅ Si el agente genera un plan con el botón "Proceed" y espera tu aprobación sin ejecutar cambios — ¡completaste el ejercicio!</div>`,
         warning: 'El flujo de aprobación NO es un sustituto de code review. Siempre revisa los cambios en un PR antes de hacer merge a main.',
       },
       {
@@ -1081,6 +1396,14 @@ npm test       # Ejecutar 15 tests
   git después de cada milestone significativo"</em> para que el agente genere
   Walkthroughs automáticamente al final de cada tarea compleja.
 </p>`,
+        simpleContent: `<p>Un <strong>Walkthrough</strong> es como un <strong>informe de obra terminada</strong> que el agente genera automáticamente después de completar un trabajo. Incluye:</p>
+<ul>
+  <li><strong>Qué se hizo:</strong> Lista de archivos creados y modificados</li>
+  <li><strong>Por qué:</strong> Las decisiones técnicas que tomó y su justificación</li>
+  <li><strong>Cómo verificar:</strong> Comandos para comprobar que todo funciona</li>
+  <li><strong>Problemas resueltos:</strong> Errores que encontró y cómo los solucionó</li>
+</ul>
+<p>Es invaluable para el futuro: cuando dentro de 6 meses te preguntes "¿por qué se hizo así?", el Walkthrough tiene la respuesta.</p>`,
         tip: 'Pide al agente que incluya una sección "Errores encontrados y resueltos" en cada Walkthrough. Esta información es oro para debugging futuro.',
       },
     ],
@@ -1111,6 +1434,42 @@ npm test       # Ejecutar 15 tests
     ],
     estimatedTime: '3 horas',
     difficulty: 'Intermedio',
+    simpleSummary: 'Imagina que tu asistente IA no solo escribe código, sino que también abre un navegador real, navega tu aplicación, hace clic en botones y verifica que todo se vea bien — como un tester de calidad automatizado. Este curso te enseña a conectar Antigravity con Chrome para que pruebe tu aplicación visualmente.',
+    quiz: [
+      {
+        question: '¿Qué significa "Browser-in-the-Loop" en el contexto de Antigravity?',
+        options: [
+          'Que el agente solo funciona dentro del navegador Chrome',
+          'Que el agente puede abrir un navegador real, navegar la app, y verificar visualmente que el código funciona',
+          'Que necesitas un navegador especial para usar Antigravity',
+          'Que el agente genera código HTML sin verificarlo',
+        ],
+        correctIndex: 1,
+        explanation: 'Browser-in-the-Loop significa que el agente cierra el ciclo de desarrollo: escribe código, abre Chrome, verifica visualmente que funciona, y corrige si algo se ve mal — todo automáticamente.',
+      },
+      {
+        question: '¿Qué puerto se usa por defecto para la depuración remota de Chrome?',
+        options: [
+          '3000',
+          '8080',
+          '9222',
+          '5173',
+        ],
+        correctIndex: 2,
+        explanation: 'Chrome DevTools usa el puerto 9222 por defecto para la depuración remota. Este puerto se configura con el flag --remote-debugging-port=9222 al lanzar Chrome.',
+      },
+      {
+        question: '¿Qué tipo de problemas puede detectar el testing visual automatizado?',
+        options: [
+          'Solo errores de JavaScript en la consola',
+          'Problemas de layout, CSS roto, elementos no visibles, contraste de colores y accesibilidad',
+          'Solo si los botones funcionan o no',
+          'Únicamente problemas de rendimiento del servidor',
+        ],
+        correctIndex: 1,
+        explanation: 'El testing visual automatizado puede detectar problemas de layout, CSS roto, elementos no visibles, overlaps, contraste de colores insuficiente, imágenes sin alt text, y otros problemas de accesibilidad.',
+      },
+    ],
     sections: [
       {
         id: 'c5s1',
@@ -1145,6 +1504,15 @@ npm test       # Ejecutar 15 tests
   importante como la lógica del código. El agente puede iterar sobre el diseño hasta
   que coincida con las especificaciones, reduciendo los ciclos de revisión humana.
 </p>`,
+        simpleContent: `<p>Normalmente, un programador escribe código y luego <strong>abre el navegador para ver si funciona</strong>. Con Browser-in-the-Loop, el agente hace esto <strong>automáticamente</strong>.</p>
+<p>Es como si tu asistente no solo escribiera el informe, sino que también lo <strong>imprimiera, lo revisara visualmente</strong>, y corrigiera errores de formato antes de entregártelo.</p>
+<ul>
+  <li>El agente escribe el código de tu página web</li>
+  <li>Abre Chrome y navega a tu aplicación</li>
+  <li>Verifica que todo se <strong>vea bien</strong> — colores, botones, textos en su lugar</li>
+  <li>Si algo está mal, lo <strong>corrige y vuelve a verificar</strong></li>
+</ul>
+<p>Es como tener un <strong>inspector de calidad automático</strong> que revisa tu trabajo visualmente.</p>`,
         tip: 'Browser-in-the-Loop convierte al agente en un QA automatizado. Úsalo después de cada cambio visual significativo para detectar regresiones.',
       },
       {
@@ -1200,6 +1568,17 @@ mcp_chrome_devtools_list_pages()
   <code>--remote-debugging-port=9222</code> y que no hay otra instancia de
   Chrome usando el mismo puerto.
 </p>`,
+        simpleContent: `<p>Para que el agente pueda usar Chrome, necesitas <strong>configurar un "puente"</strong> entre Antigravity y el navegador. Es como conectar un control remoto a tu televisor.</p>
+<p>El proceso tiene 3 pasos simples:</p>
+<ul>
+  <li><strong>Paso 1:</strong> Agregar la configuración del puente (un archivo JSON con la ubicación de Chrome)</li>
+  <li><strong>Paso 2:</strong> Abrir Chrome en un modo especial llamado "depuración remota" — como abrir la puerta trasera para que el agente pueda entrar</li>
+  <li><strong>Paso 3:</strong> Verificar que la conexión funciona — el agente lista las páginas abiertas en tu Chrome</li>
+</ul>
+<p>Una vez configurado, el agente puede <strong>controlar Chrome como si fuera un usuario humano</strong>.</p>`,
+        exercise: `<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Explícame paso a paso cómo configurar Chrome DevTools MCP en mi Mac, incluyendo el comando exacto para lanzar Chrome con depuración remota"</div>
+<div class="exercise-success">✅ Si el agente te da los comandos exactos y la configuración JSON necesaria — ¡completaste el ejercicio!</div>`,
         warning: 'El puerto de depuración remota (9222) expone control total sobre el navegador. Nunca lo uses con Chrome en sesiones con datos sensibles (banking, email personal).',
       },
       {
@@ -1256,6 +1635,15 @@ mcp_chrome_devtools_click({
   rompen funcionalidad existente — esencialmente un <strong>test de regresión
   visual automatizado</strong>.
 </p>`,
+        simpleContent: `<p>Una vez conectado a Chrome, el agente puede hacer <strong>todo lo que haría un usuario humano</strong>:</p>
+<ul>
+  <li>Abrir páginas web y navegar entre ellas</li>
+  <li>Hacer <strong>clic en botones</strong> y enlaces</li>
+  <li>Escribir texto en <strong>formularios</strong> (nombre, email, contraseña)</li>
+  <li>Tomar <strong>capturas de pantalla</strong> como evidencia</li>
+</ul>
+<p>Es como tener un <strong>robot que prueba tu aplicación</strong> haciendo clic en todo y verificando que funcione. Si algo falla, te avisa y lo corrige automáticamente.</p>
+<p>Puede repetir las mismas pruebas una y otra vez para asegurarse de que los cambios nuevos no rompen lo que ya funcionaba.</p>`,
         tip: 'Asigna IDs únicos y descriptivos a todos los elementos interactivos de tu UI. Esto facilita enormemente la automatización con selectores CSS simples.',
       },
       {
@@ -1313,6 +1701,17 @@ for (const vp of viewports) {
   Este flujo garantiza que tu aplicación se ve correctamente en los tres breakpoints
   principales sin necesidad de verificación manual en cada dispositivo.
 </p>`,
+        simpleContent: `<p>El <strong>testing visual</strong> es como sacarle <strong>fotos a tu aplicación</strong> para verificar que se vea bien en diferentes dispositivos:</p>
+<ul>
+  <li>El agente toma <strong>capturas de pantalla</strong> de tu app</li>
+  <li>Verifica que los botones, textos e imágenes estén en su lugar</li>
+  <li>Prueba en diferentes tamaños: <strong>celular, tablet y computador</strong></li>
+  <li>Si algo se ve mal, lo corrige y vuelve a tomar la foto</li>
+</ul>
+<p>Es como enviar a un fotógrafo a revisar tu tienda — si un letrero está torcido o un color no combina, te avisa y lo arregla.</p>`,
+        exercise: `<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Si tuvieras acceso a Chrome DevTools MCP, ¿cómo verificarías que esta aplicación se ve correctamente en móvil (375px), tablet (768px) y desktop (1920px)? Explícame el flujo paso a paso."</div>
+<div class="exercise-success">✅ Si el agente te explica el flujo de cambiar viewport, capturar screenshots y comparar resultados — ¡completaste el ejercicio!</div>`,
         tip: 'Crea una carpeta screenshots/ en tu proyecto y pide al agente que capture evidencia visual después de cada cambio de UI. Es excelente para documentar PRs.',
       },
       {
@@ -1381,6 +1780,13 @@ mcp_chrome_devtools_accessibility_audit()
   lo que hace a Browser-in-the-Loop tan poderoso: el agente no solo genera código,
   sino que lo prueba en condiciones reales y corrige hasta que todo funciona.
 </p>`,
+        simpleContent: `<p>El agente también puede leer los <strong>"mensajes internos"</strong> del navegador (logs de consola) para detectar errores invisibles al usuario:</p>
+<ul>
+  <li><strong>Errores de JavaScript:</strong> Encuentra bugs que hacen que la página falle</li>
+  <li><strong>Advertencias:</strong> Detecta problemas menores que podrían crecer</li>
+  <li><strong>Accesibilidad:</strong> Verifica que personas con discapacidad visual puedan usar tu app (contraste de colores, textos alternativos en imágenes)</li>
+</ul>
+<p>Es como tener un <strong>doctor que le hace un chequeo completo</strong> a tu aplicación: revisa lo visible (diseño) y lo invisible (errores internos), y te da un reporte de salud con puntuación.</p>`,
         warning: 'La auditoría de accesibilidad automatizada cubre ~60% de los problemas. Siempre complementa con testing manual usando lectores de pantalla para aplicaciones de producción.',
       },
     ],

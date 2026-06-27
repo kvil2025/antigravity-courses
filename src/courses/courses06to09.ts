@@ -23,6 +23,7 @@ export const courses06to09: Record<number, CourseContent> = {
     ],
     estimatedTime: '3 horas',
     difficulty: 'Intermedio',
+    simpleSummary: 'Imagina que el agente tiene un escritorio con espacio limitado. Cada vez que le pides algo, pone documentos sobre el escritorio: tus instrucciones, archivos que lee, resultados de búsquedas. Si el escritorio se llena, los documentos más viejos se caen al piso y el agente los olvida. Este curso te enseña a ser ordenado: pedir solo lo necesario, buscar antes de leer, y mantener el escritorio despejado para que el agente trabaje mejor y más rápido.',
     sections: [
       {
         id: 'ctx-problem',
@@ -41,6 +42,16 @@ export const courses06to09: Record<number, CourseContent> = {
 
 <p>La clave es ser <strong>quirúrgico</strong>: obtener exactamente la información necesaria, en la cantidad mínima, con la herramienta más precisa disponible.</p>
 `,
+        simpleContent: `<p>Piensa en el agente como un chef con una mesa de trabajo pequeña 🍳. Cada vez que le pides algo, pone ingredientes (información) sobre la mesa. Si la mesa se llena de cosas innecesarias, no tiene espacio para cocinar bien.</p>
+<ul>
+  <li><strong>Saturación</strong>: la mesa se llena y los ingredientes importantes se pierden entre el desorden</li>
+  <li><strong>Lentitud</strong>: más cosas en la mesa = más tiempo buscando lo que necesita</li>
+  <li><strong>Confusión</strong>: el chef ya no recuerda qué le pediste al principio</li>
+</ul>
+<p>La solución es ser preciso: pedir exactamente lo que necesitas, ni más ni menos.</p>`,
+        exercise: `<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Lee solo las líneas 1 a 20 del archivo package.json de este proyecto"</div>
+<div class="exercise-success">✅ Si el agente lee solo esas líneas en vez del archivo completo — ¡completaste el ejercicio!</div>`,
         warning: 'Un solo archivo de 2000 líneas puede consumir el 40% de tu ventana de contexto. Siempre usa rangos de líneas específicos.',
       },
       {
@@ -68,6 +79,14 @@ export const courses06to09: Record<number, CourseContent> = {
 
 <p>Para gestionar esto eficientemente, debes <strong>minimizar el tamaño del historial</strong> usando herramientas de lectura con rangos específicos y evitando operaciones que devuelvan grandes volúmenes de texto innecesario.</p>
 `,
+        simpleContent: `<p>Imagina que el agente tiene una pizarra blanca dividida en secciones 📋. Una parte es para las reglas del sistema, otra para la conversación, otra para tu pregunta actual, y otra para escribir la respuesta.</p>
+<ul>
+  <li>Las <strong>reglas del sistema</strong> ocupan ~20% (como las instrucciones permanentes)</li>
+  <li>La <strong>conversación anterior</strong> ocupa ~50% (todo lo que han hablado)</li>
+  <li>Tu <strong>pregunta actual</strong> ocupa ~5%</li>
+  <li>La <strong>respuesta</strong> necesita ~25% de espacio libre</li>
+</ul>
+<p>Cuando la pizarra se llena, el agente borra lo más antiguo. Si le diste instrucciones importantes al inicio, ¡podrían desaparecer!</p>`,
         tip: 'Puedes verificar si tu contexto se está truncando revisando los transcripts en ~/.gemini/antigravity/brain/<conversation-id>/.system_generated/logs/transcript.jsonl — busca campos is_truncated: true.',
       },
       {
@@ -114,6 +133,17 @@ view_file({ AbsolutePath: "/src/main.ts", StartLine: 150, EndLine: 190 })
 <h4>4. Subagentes para tareas largas</h4>
 <p>Delega investigaciones extensas a subagentes. Cada subagente tiene su propia ventana de contexto limpia.</p>
 `,
+        simpleContent: `<p>Hay 4 trucos para mantener al agente eficiente, como organizar una oficina 🗂️:</p>
+<ul>
+  <li><strong>Pedir solo lo necesario</strong>: en vez de pedir "todo el expediente", pide "las páginas 5 a 10"</li>
+  <li><strong>Buscar antes de leer</strong>: primero pregunta "¿en qué página está el dato?" y luego lee solo esa página</li>
+  <li><strong>Conocer la estructura</strong>: revisa el índice de carpetas antes de buscar por todo el archivo</li>
+  <li><strong>Delegar</strong>: para investigaciones largas, envía un asistente separado con su propia mesa limpia</li>
+</ul>
+<p>Cada truco ahorra espacio en la "pizarra" del agente y lo hace responder más rápido.</p>`,
+        exercise: `<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Busca dónde está la función 'main' en el proyecto y luego lee solo esas líneas específicas"</div>
+<div class="exercise-success">✅ Si el agente usa grep_search primero y luego view_file con rangos — ¡completaste el ejercicio!</div>`,
         tip: 'La regla de oro: si no necesitas ver más de 50 líneas, probablemente no necesitas leer más de 50 líneas.',
       },
       {
@@ -163,6 +193,13 @@ view_file({ AbsolutePath: "/.env.example" })         // ~15 líneas
 })
 </code></pre>
 `,
+        simpleContent: `<p>Cuando un archivo es muy largo (como un libro de 800 páginas 📖), no lo leas completo. Usa esta estrategia en tres pasos:</p>
+<ul>
+  <li><strong>Paso 1</strong>: Lee solo el índice (las primeras líneas) para entender la estructura</li>
+  <li><strong>Paso 2</strong>: Busca la palabra clave específica que necesitas (como buscar en el índice del libro)</li>
+  <li><strong>Paso 3</strong>: Lee solo el capítulo relevante</li>
+</ul>
+<p>Para archivos pequeños (como una nota adhesiva), está bien leerlos completos. El truco está en saber cuándo un archivo es "grande" y necesita la estrategia de bloques.</p>`,
         warning: 'Nunca leas node_modules, dist, o .git. Estos directorios pueden contener miles de archivos y saturarán tu contexto instantáneamente.',
       },
       {
@@ -210,7 +247,49 @@ view_file({ AbsolutePath: "/src/router.ts" })
 })
 </code></pre>
 `,
+        simpleContent: `<p>La velocidad del agente depende de dos cosas: cuánta información procesa y cuántas tareas ejecuta. Para hacerlo más rápido ⚡:</p>
+<ul>
+  <li><strong>Menos información por turno</strong>: pide solo lo que necesitas, como pedir un resumen en vez del informe completo</li>
+  <li><strong>Tareas en paralelo</strong>: si necesitas dos cosas que no dependen entre sí, pídelas al mismo tiempo</li>
+  <li><strong>Delegar</strong>: para investigaciones largas, envía un "asistente" separado que trabaja independientemente y te entrega solo el resultado</li>
+</ul>
+<p>Es como en un restaurante: un buen gerente no cocina todo solo, delega a su equipo y coordina.</p>`,
         tip: 'Si una sesión se vuelve lenta, considera iniciar una nueva conversación con instrucciones claras de lo que necesitas. Un contexto limpio = respuestas más rápidas.',
+      },
+    ],
+    quiz: [
+      {
+        question: '¿Qué sucede cuando la ventana de contexto del agente se llena completamente?',
+        options: [
+          'El agente deja de funcionar y muestra un error',
+          'Los pasos más antiguos se comprimen o eliminan automáticamente',
+          'El agente pide al usuario que borre mensajes manualmente',
+          'Se abre una nueva ventana de contexto adicional',
+        ],
+        correctIndex: 1,
+        explanation: 'Antigravity aplica truncamiento automático: los pasos más antiguos se comprimen o eliminan, lo que puede hacer que instrucciones importantes del inicio se pierdan.',
+      },
+      {
+        question: '¿Cuál es la forma más eficiente de encontrar una función específica en un archivo de 2000 líneas?',
+        options: [
+          'Leer el archivo completo con view_file y buscar visualmente',
+          'Usar grep_search para localizar la línea exacta y luego leer solo ese rango',
+          'Pedir al agente que adivine en qué línea está',
+          'Abrir el archivo en un editor externo y decirle al agente el número de línea',
+        ],
+        correctIndex: 1,
+        explanation: 'El patrón correcto es "buscar antes de leer": usar grep_search para encontrar la ubicación exacta y luego view_file con StartLine/EndLine para leer solo el rango necesario.',
+      },
+      {
+        question: '¿Por qué los subagentes ayudan a reducir problemas de contexto?',
+        options: [
+          'Porque usan un modelo de IA más pequeño y eficiente',
+          'Porque comparten la ventana de contexto del agente principal',
+          'Porque cada uno tiene su propia ventana de contexto limpia y solo devuelven el resultado',
+          'Porque pueden leer archivos más rápido que el agente principal',
+        ],
+        correctIndex: 2,
+        explanation: 'Cada subagente obtiene una ventana de contexto limpia e independiente. Solo el resultado final se envía al agente principal, ahorrando tokens significativos en investigaciones extensas.',
       },
     ],
     keyTakeaways: [
@@ -240,6 +319,7 @@ view_file({ AbsolutePath: "/src/router.ts" })
     ],
     estimatedTime: '4 horas',
     difficulty: 'Avanzado',
+    simpleSummary: 'Los Skills son como "recetas especializadas" que le enseñas al agente. Imagina que tienes un empleado nuevo muy inteligente pero que no sabe las reglas específicas de tu empresa. Los Skills son los manuales que le entregas: "cuando alguien pida X, sigue estos pasos". En este curso aprenderás a crear esos manuales para que el agente trabaje exactamente como tú necesitas, automatizando tareas repetitivas con instrucciones precisas.',
     sections: [
       {
         id: 'skill-anatomy',
@@ -276,6 +356,13 @@ view_file({ AbsolutePath: "/src/router.ts" })
 
 <p>El agente evalúa el <code>name</code> y <code>description</code> del frontmatter para decidir si un skill es relevante. Si lo es, lee el contenido completo del SKILL.md y sigue sus instrucciones.</p>
 `,
+        simpleContent: `<p>Un Skill es como una receta de cocina para el agente 📝. Le dice exactamente qué hacer cuando enfrenta una tarea específica.</p>
+<ul>
+  <li><strong>Estructura mínima</strong>: solo necesitas un archivo con instrucciones (como una receta de una página)</li>
+  <li><strong>Estructura completa</strong>: puede incluir scripts auxiliares, ejemplos y documentación extra (como un libro de cocina completo)</li>
+  <li><strong>Dos ubicaciones</strong>: puedes guardar recetas globales (para todos los proyectos) o recetas específicas (solo para este proyecto)</li>
+</ul>
+<p>El agente lee el título y la descripción de cada receta para decidir cuándo usarla, como un chef que elige la receta correcta según el plato que le piden.</p>`,
         tip: 'Coloca skills genéricos (seguridad, design system, convenciones de código) en la raíz global, y skills específicos del proyecto en .agents/skills/.',
       },
       {
@@ -329,6 +416,15 @@ service cloud.firestore {
 
 <p>Mantén el SKILL.md por debajo de <strong>500 líneas</strong>. Para documentación extensa, usa el directorio <code>references/</code> y referencia los archivos desde el SKILL.md.</p>
 `,
+        simpleContent: `<p>El archivo SKILL.md es como la portada y el contenido de un manual de instrucciones 📖. Tiene dos partes:</p>
+<ul>
+  <li><strong>Encabezado (frontmatter)</strong>: el título y la descripción — es lo que el agente lee primero para decidir si este manual le sirve</li>
+  <li><strong>Cuerpo (instrucciones)</strong>: los pasos detallados, reglas obligatorias, ejemplos y checklists que el agente debe seguir</li>
+</ul>
+<p>Piénsalo como la ficha técnica de un producto: primero el nombre y para qué sirve, luego las instrucciones de uso detalladas. Si el manual es muy largo (más de 500 líneas), guarda las secciones extras en una carpeta aparte.</p>`,
+        exercise: `<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Crea un skill llamado 'mi-primer-skill' en .agents/skills/ con un SKILL.md que tenga name, description y una regla simple"</div>
+<div class="exercise-success">✅ Si el agente crea la carpeta y el archivo SKILL.md con frontmatter YAML válido — ¡completaste el ejercicio!</div>`,
         warning: 'El frontmatter YAML es lo ÚNICO que el agente evalúa para decidir si activar el skill. Si el name o description son vagos, el skill podría no activarse cuando se necesita.',
       },
       {
@@ -375,6 +471,13 @@ description: "Guía de seguridad general."
 
 <p>El agente realiza un <strong>matching semántico</strong> entre la tarea del usuario y el name/description. Cuanto más específico seas, mejor será la activación selectiva del skill.</p>
 `,
+        simpleContent: `<p>El "trigger" de un skill funciona como las etiquetas de un libro en una biblioteca 🏷️. Cuando alguien busca un tema, el bibliotecario lee las etiquetas para encontrar el libro correcto.</p>
+<ul>
+  <li><strong>Nombre específico</strong>: "Guía de seguridad para Firebase" es mejor que "Seguridad" (como etiquetar "Novela de misterio" vs solo "Libro")</li>
+  <li><strong>Palabras clave claras</strong>: incluye las tecnologías exactas que el skill cubre</li>
+  <li><strong>Indicador "LEER cuando"</strong>: termina la descripción diciendo en qué situaciones usar el skill</li>
+</ul>
+<p>Un trigger bien escrito hace que el agente active automáticamente el skill correcto en el momento correcto.</p>`,
         tip: 'Incluye el nombre de las tecnologías exactas en la descripción (Firebase, FastAPI, Docker, etc.). El matching semántico funciona mejor con términos técnicos específicos.',
       },
       {
@@ -424,6 +527,15 @@ description: "Guía de seguridad general."
 }
 </code></pre>
 `,
+        simpleContent: `<p>Un skill bien organizado es como una oficina ordenada con cajones etiquetados 🗄️:</p>
+<ul>
+  <li><strong>SKILL.md</strong>: el manual principal (obligatorio, máximo 500 líneas)</li>
+  <li><strong>scripts/</strong>: herramientas automatizadas que el agente puede ejecutar</li>
+  <li><strong>examples/</strong>: ejemplos listos para copiar y usar como plantilla</li>
+  <li><strong>resources/</strong>: archivos de apoyo (como plantillas o configuraciones)</li>
+  <li><strong>references/</strong>: documentación extra para casos especiales</li>
+</ul>
+<p>Si tu skill está en una ubicación no estándar, puedes crear un archivo de registro para que el agente sepa dónde encontrarlo.</p>`,
         warning: 'Siempre obtén confirmación explícita del usuario antes de modificar skills compartidos (team skills). Cambios accidentales pueden afectar a todo el equipo.',
       },
       {
@@ -505,7 +617,52 @@ echo "✅ Proyecto $PROJECT_NAME creado exitosamente"
 - Siempre leer el skill \`security-hardening\` antes de deployar.
 </code></pre>
 `,
+        simpleContent: `<p>Los skills avanzados combinan instrucciones con herramientas automáticas, como un manual que incluye un robot que ejecuta los pasos por ti 🤖.</p>
+<ul>
+  <li><strong>Instrucciones + Scripts</strong>: el manual dice "qué hacer" y los scripts lo hacen automáticamente</li>
+  <li><strong>Validación automática</strong>: después de ejecutar, el skill puede verificar que todo salió bien</li>
+  <li><strong>Reglas para scripts</strong>: siempre incluir manejo de errores, mensajes de progreso y validación de entradas</li>
+</ul>
+<p>Puedes hacer que ciertos skills se carguen siempre (como las reglas de seguridad) registrándolos en el archivo de configuración principal del proyecto.</p>`,
+        exercise: `<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Crea un skill avanzado en .agents/skills/lint-checker/ con SKILL.md y un script en scripts/check.sh que ejecute el linter del proyecto"</div>
+<div class="exercise-success">✅ Si el agente crea la carpeta con SKILL.md (con frontmatter) y el script check.sh con set -euo pipefail — ¡completaste el ejercicio!</div>`,
         tip: 'Los skills con scripts son especialmente útiles para tareas repetitivas como setup de proyectos, auditorías de seguridad, y deployments. Automatiza todo lo que hagas más de dos veces.',
+      },
+    ],
+    quiz: [
+      {
+        question: '¿Qué parte del SKILL.md usa el agente para decidir si activar un skill?',
+        options: [
+          'El cuerpo completo del Markdown',
+          'Solo los campos name y description del frontmatter YAML',
+          'Los scripts dentro del directorio scripts/',
+          'Los ejemplos dentro del directorio examples/',
+        ],
+        correctIndex: 1,
+        explanation: 'El agente evalúa únicamente el name y description del frontmatter YAML para hacer matching semántico con la tarea del usuario. El cuerpo del Markdown solo se lee después de que el skill se activa.',
+      },
+      {
+        question: '¿Cuál es la diferencia entre un skill global y un skill de workspace?',
+        options: [
+          'Los globales son más rápidos y los de workspace más lentos',
+          'Los globales se aplican a todos los proyectos; los de workspace solo al proyecto actual',
+          'Los globales son solo de lectura y los de workspace son editables',
+          'No hay diferencia, son sinónimos',
+        ],
+        correctIndex: 1,
+        explanation: 'Los skills globales (en ~/.gemini/config/skills/) se aplican a todos los workspaces del usuario, mientras que los de workspace (en .agents/skills/) son específicos del proyecto actual.',
+      },
+      {
+        question: '¿Por qué se recomienda mantener el SKILL.md por debajo de 500 líneas?',
+        options: [
+          'Porque el sistema no soporta archivos más grandes',
+          'Para reducir el consumo de tokens cuando el agente carga el skill',
+          'Porque YAML tiene un límite técnico de 500 líneas',
+          'Es solo una sugerencia estética sin impacto real',
+        ],
+        correctIndex: 1,
+        explanation: 'Cada vez que el agente activa un skill, carga todo el SKILL.md en su contexto. Un archivo muy largo consume muchos tokens valiosos. La documentación extensa debe guardarse en references/ y leerse bajo demanda.',
       },
     ],
     keyTakeaways: [
@@ -535,6 +692,7 @@ echo "✅ Proyecto $PROJECT_NAME creado exitosamente"
     ],
     estimatedTime: '3.5 horas',
     difficulty: 'Avanzado',
+    simpleSummary: 'El CLI (línea de comandos) de Antigravity es como tener un control remoto para tu agente de IA. En vez de chatear con él en una ventana, puedes darle instrucciones desde la terminal y dejarlo trabajando solo, incluso mientras duermes. Este curso te enseña a programar tareas automáticas: como un vigilante nocturno que revisa tu proyecto cada noche, actualiza lo necesario y te deja un reporte en la mañana.',
     sections: [
       {
         id: 'cli-intro',
@@ -572,6 +730,15 @@ agy run --help
 
 <p>En el modo headless, el agente recibe el prompt, ejecuta las acciones necesarias, y termina. No hay interacción humana durante la ejecución — es completamente autónomo.</p>
 `,
+        simpleContent: `<p>El CLI es como un control remoto para tu agente 🎮. En vez de chatear con él en una ventana visual, le das instrucciones directamente desde la terminal.</p>
+<ul>
+  <li><strong>Modo interactivo</strong>: como una llamada telefónica — hablan ida y vuelta</li>
+  <li><strong>Modo headless</strong>: como enviar un email con instrucciones — el agente las ejecuta solo y te avisa cuando termina</li>
+</ul>
+<p>El modo headless es perfecto para tareas automáticas: le dejas una tarea antes de dormir y la encuentras resuelta al despertar. Es como tener un empleado nocturno que trabaja mientras descansas.</p>`,
+        exercise: `<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Explícame la diferencia entre agy run en modo interactivo y modo headless, con un ejemplo de cada uno"</div>
+<div class="exercise-success">✅ Si el agente te explica ambos modos con ejemplos claros — ¡completaste el ejercicio!</div>`,
         tip: 'El modo headless es perfecto para tareas nocturnas. Combínalo con el comando /goal del editor para tareas extra-exhaustivas.',
       },
       {
@@ -629,6 +796,14 @@ agy config set default-model gemini-2.5-pro
 agy config set headless-timeout 300  # 5 minutos
 </code></pre>
 `,
+        simpleContent: `<p>El CLI tiene 4 comandos principales, como los botones de un control remoto 📱:</p>
+<ul>
+  <li><strong>agy run</strong>: "Haz esto" — ejecuta una tarea. Puedes darle el texto directamente o un archivo con instrucciones</li>
+  <li><strong>agy prompt</strong>: "Guarda esta instrucción" — guarda prompts que usas frecuentemente para reutilizarlos</li>
+  <li><strong>agy session</strong>: "¿Qué estabas haciendo?" — ve las sesiones activas y continúa donde lo dejaste</li>
+  <li><strong>agy config</strong>: "Configúrate así" — ajusta opciones como el modelo de IA o el tiempo máximo de ejecución</li>
+</ul>
+<p>Es como tener una agenda de tareas automatizadas: guardas las instrucciones y las ejecutas cuando las necesites.</p>`,
         warning: 'El timeout por defecto en modo headless puede no ser suficiente para tareas complejas. Configura headless-timeout según la complejidad esperada de la tarea.',
       },
       {
@@ -658,14 +833,14 @@ for project in "$PROJECTS_DIR"/*/; do
      Actualiza las que tengan parches de seguridad. \
      Ejecuta los tests después de actualizar. \
      Reporta un resumen de cambios realizados." \
-    2&gt;&amp;1) || true
+    2>&1) || true
 
-  echo "$result" &gt;&gt; "$LOG_FILE"
+  echo "$result" >> "$LOG_FILE"
   REPORT+="## $project_name\n$result\n\n"
 done
 
 # Generar reporte consolidado
-echo -e "$REPORT" &gt; "$HOME/reports/weekly-$(date +%Y%m%d).md"
+echo -e "$REPORT" > "$HOME/reports/weekly-$(date +%Y%m%d).md"
 echo "✅ Mantenimiento completado. Ver: $LOG_FILE"
 </code></pre>
 
@@ -686,6 +861,13 @@ agy run "Paso 2: Lee /tmp/todos.md y resuelve los 3 más \
   críticos. Ejecuta tests después de cada corrección."
 </code></pre>
 `,
+        simpleContent: `<p>La magia del CLI aparece cuando lo combinas con scripts automatizados 🪄. Es como programar una cadena de tareas:</p>
+<ul>
+  <li><strong>Mantenimiento semanal</strong>: un script que recorre todos tus proyectos, revisa dependencias, ejecuta tests y genera un reporte</li>
+  <li><strong>Ejecución condicional</strong>: "si alguien cambió las dependencias, ejecuta una auditoría automática"</li>
+  <li><strong>Pipelines</strong>: encadenar tareas en secuencia — primero analiza, luego corrige, luego verifica</li>
+</ul>
+<p>Es como programar una lavadora: pones la ropa, seleccionas el ciclo, y la máquina hace todo sola mientras tú haces otra cosa.</p>`,
         tip: 'Usa || true después de agy run en scripts para que el script continúe incluso si un proyecto individual falla.',
       },
       {
@@ -722,13 +904,13 @@ cd "$WORKSPACE"
 git branch --merged main | grep -v "main" | xargs -r git branch -d
 
 # 2. Verificar que el proyecto compila
-npm run build 2&gt;&amp;1 || {
+npm run build 2>&1 || {
   agy run "El build falló. Diagnostica y corrige el error. \
     Haz commit con mensaje descriptivo."
 }
 
 # 3. Ejecutar tests
-npm test 2&gt;&amp;1 || {
+npm test 2>&1 || {
   agy run "Hay tests fallando. Analiza los errores y corrígelos. \
     No modifiques la lógica del test a menos que sea incorrecto."
 }
@@ -743,6 +925,16 @@ echo "✅ Mantenimiento diario completado: $(date)"
 
 <p>Para macOS, puedes usar <code>launchd</code> como alternativa más robusta a cron, especialmente si necesitas que la tarea se ejecute incluso cuando la máquina está en sleep.</p>
 `,
+        simpleContent: `<p>Puedes programar al agente para que trabaje en horarios fijos, como un vigilante nocturno 🌙:</p>
+<ul>
+  <li><strong>Diario a las 2 AM</strong>: limpia ramas viejas, verifica que el proyecto compila, ejecuta tests</li>
+  <li><strong>Semanal (domingos)</strong>: auditoría de seguridad completa</li>
+  <li><strong>Mensual</strong>: reporte completo del estado del código</li>
+</ul>
+<p>Si algo falla (el proyecto no compila o los tests fallan), el agente automáticamente intenta corregirlo. Es como tener un mecánico que revisa tu auto todas las noches y repara lo que encuentre.</p>`,
+        exercise: `<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Crea un script bash llamado maintenance.sh que use agy run para verificar que el proyecto compila y ejecutar los tests"</div>
+<div class="exercise-success">✅ Si el agente crea un script con set -euo pipefail, verificación de build y tests — ¡completaste el ejercicio!</div>`,
         warning: 'Asegúrate de que las variables de entorno (PATH, HOME, tokens) estén disponibles en el entorno de cron. Cron usa un entorno mínimo por defecto.',
       },
       {
@@ -822,7 +1014,49 @@ jobs:
   <li>Revisa los cambios del agente antes de merge automático.</li>
 </ul>
 `,
+        simpleContent: `<p>CI/CD es como una línea de ensamblaje en una fábrica 🏭. Cada vez que alguien propone cambios al código, el agente automáticamente:</p>
+<ul>
+  <li><strong>Revisa el código</strong>: como un supervisor que verifica la calidad antes de aprobar</li>
+  <li><strong>Genera documentación</strong>: crea un resumen de los cambios automáticamente</li>
+  <li><strong>Busca problemas</strong>: evalúa seguridad, rendimiento y mejores prácticas</li>
+</ul>
+<p>Todo esto sucede automáticamente en GitHub cada vez que alguien envía código nuevo. El agente deja comentarios con sus hallazgos, como un revisor incansable que nunca se cansa. ⚠️ Nunca pongas contraseñas directamente en la configuración.</p>`,
         tip: 'Configura el workflow para que solo se ejecute en PRs que modifiquen código fuente (no docs ni configs). Usa paths-filter para optimizar.',
+      },
+    ],
+    quiz: [
+      {
+        question: '¿Cuál es la diferencia principal entre el modo interactivo y el modo headless del CLI?',
+        options: [
+          'El modo interactivo es más rápido que el headless',
+          'El modo headless permite interacción humana durante la ejecución',
+          'El modo headless ejecuta un prompt y termina sin interacción humana, ideal para automatización',
+          'El modo interactivo no puede ejecutar herramientas',
+        ],
+        correctIndex: 2,
+        explanation: 'En modo headless, el agente recibe el prompt, ejecuta las acciones necesarias y termina automáticamente. No hay interacción humana durante la ejecución, lo que lo hace ideal para scripts y automatización.',
+      },
+      {
+        question: '¿Cuál es una buena práctica al usar agy run dentro de un script bash con múltiples proyectos?',
+        options: [
+          'Usar set -euo pipefail y detener el script al primer error',
+          'Agregar || true después de agy run para que el script continúe aunque un proyecto falle',
+          'Ejecutar todos los proyectos en paralelo sin manejo de errores',
+          'Ignorar los errores y solo revisar el reporte final',
+        ],
+        correctIndex: 1,
+        explanation: 'Agregar || true después de agy run permite que el script continúe procesando los demás proyectos aunque uno individual falle, evitando que un error detenga todo el mantenimiento.',
+      },
+      {
+        question: '¿Qué consideración de seguridad es CRÍTICA al integrar agy en GitHub Actions?',
+        options: [
+          'Usar el modelo más caro disponible',
+          'Nunca exponer API keys en los logs — usar GitHub Secrets',
+          'Ejecutar el agente con permisos de administrador completos',
+          'Permitir merge automático sin revisión humana',
+        ],
+        correctIndex: 1,
+        explanation: 'Las API keys y credenciales nunca deben aparecer en los logs del workflow. Deben almacenarse como GitHub Secrets y referenciarse mediante variables de entorno seguras.',
       },
     ],
     keyTakeaways: [
@@ -853,6 +1087,7 @@ jobs:
     ],
     estimatedTime: '4 horas',
     difficulty: 'Avanzado',
+    simpleSummary: 'MCP es como un adaptador universal que le permite al agente conectarse con servicios externos: bases de datos, plataformas cloud, navegadores y más. Sin MCP, el agente solo puede trabajar con archivos locales. Con MCP, es como darle un teléfono con el que puede llamar a cualquier servicio: Firebase, PostgreSQL, Chrome DevTools, etc. Este curso te enseña a configurar esas conexiones y a elegir qué herramientas cargar para no desperdiciar recursos.',
     sections: [
       {
         id: 'mcp-what',
@@ -880,6 +1115,16 @@ jobs:
 
 <p>MCP usa el protocolo <strong>JSON-RPC 2.0</strong> para comunicación bidireccional. Los servidores MCP pueden ejecutarse como procesos locales (comunicación via stdio) o como servicios remotos (comunicación via HTTP/SSE).</p>
 `,
+        simpleContent: `<p>MCP es como un adaptador universal de enchufes 🔌. Sin él, el agente solo puede trabajar con lo que tiene en su computadora. Con MCP, puede conectarse a servicios externos:</p>
+<ul>
+  <li><strong>Bases de datos</strong>: consultar información directamente sin comandos complicados</li>
+  <li><strong>Servicios en la nube</strong>: gestionar Firebase, servidores, almacenamiento</li>
+  <li><strong>Herramientas especiales</strong>: controlar un navegador, analizar mapas, etc.</li>
+</ul>
+<p>La ventaja es que cada "enchufe" viene con instrucciones claras de uso, así el agente sabe exactamente cómo conectarse sin adivinar. Es un estándar abierto, como USB: funciona con cualquier plataforma compatible.</p>`,
+        exercise: `<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Lista todos los servidores MCP que tengo configurados actualmente y dime qué herramientas ofrece cada uno"</div>
+<div class="exercise-success">✅ Si el agente lista los servidores MCP con sus herramientas eager y lazy — ¡completaste el ejercicio!</div>`,
         tip: 'MCP es un estándar abierto creado por Anthropic y adoptado por Google en Antigravity. Los servidores MCP son reutilizables entre diferentes plataformas compatibles.',
       },
       {
@@ -925,6 +1170,13 @@ jobs:
   <li><strong>instructions.md</strong> (opcional): directrices de uso y mejores prácticas que el agente lee antes de usar las herramientas.</li>
 </ul>
 `,
+        simpleContent: `<p>La arquitectura MCP funciona como un servicio de delivery en tres capas 🏗️:</p>
+<ul>
+  <li><strong>Capa 1 - El cliente (Antigravity)</strong>: tú haces el pedido — el agente envía la solicitud</li>
+  <li><strong>Capa 2 - El servidor MCP</strong>: el repartidor — recibe tu pedido y lo traduce al restaurante correcto</li>
+  <li><strong>Capa 3 - El recurso real</strong>: el restaurante — la base de datos o servicio que tiene la información</li>
+</ul>
+<p>Cada servidor MCP viene con un "menú" (schemas) que describe qué puede hacer y cómo pedirlo. También puede incluir un manual de mejores prácticas para que el agente lo use correctamente.</p>`,
       },
       {
         id: 'mcp-config',
@@ -998,6 +1250,16 @@ Lazy:
 - Timeout: 30 segundos por operación
 </code></pre>
 `,
+        simpleContent: `<p>Configurar un servidor MCP es como agregar un nuevo contacto a la agenda del agente 📇. Le dices:</p>
+<ul>
+  <li><strong>Cómo llamarlo</strong>: qué comando ejecutar para iniciar el servidor</li>
+  <li><strong>Qué credenciales usar</strong>: las llaves de acceso (guardadas en variables de entorno, nunca en el código)</li>
+  <li><strong>Qué puede hacer</strong>: la lista de herramientas disponibles</li>
+</ul>
+<p>Una vez configurado, puedes verificar que funciona revisando la lista de servidores activos. Cada servidor también puede tener un manual de mejores prácticas para que el agente lo use correctamente.</p>`,
+        exercise: `<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Muéstrame la configuración MCP actual del proyecto y explícame qué hace cada servidor configurado"</div>
+<div class="exercise-success">✅ Si el agente lee la configuración y te explica cada servidor — ¡completaste el ejercicio!</div>`,
         warning: 'Nunca incluyas credenciales directamente en la configuración de servidores MCP. Usa variables de entorno o archivos de service account excluidos del control de versiones.',
       },
       {
@@ -1058,6 +1320,12 @@ call_mcp_tool({
   </tbody>
 </table>
 `,
+        simpleContent: `<p>Las herramientas MCP se dividen en dos tipos, como las apps de tu teléfono 📱:</p>
+<ul>
+  <li><strong>Eager (siempre abiertas)</strong>: como las apps que dejas abiertas en segundo plano — están listas al instante pero consumen batería (tokens) todo el tiempo</li>
+  <li><strong>Lazy (bajo demanda)</strong>: como las apps que abres solo cuando las necesitas — tardan un segundo extra en cargar pero no gastan recursos mientras no las usas</li>
+</ul>
+<p>La regla general: si usas una herramienta constantemente, ponla como eager. Si la usas ocasionalmente, déjala como lazy. Si un servidor tiene más de 5 herramientas, solo las 2-3 más usadas deberían ser eager.</p>`,
         tip: 'Si un servidor MCP tiene más de 5 herramientas, marca la mayoría como lazy y solo las 2-3 más usadas como eager. Esto optimiza significativamente el consumo de tokens del system prompt.',
       },
       {
@@ -1149,7 +1417,49 @@ call_mcp_tool({
 
 <p>Para crear un servidor MCP personalizado, necesitas implementar el protocolo JSON-RPC 2.0 con los métodos estándar: <code>tools/list</code> y <code>tools/call</code>.</p>
 `,
+        simpleContent: `<p>Las integraciones MCP más populares cubren los servicios que los desarrolladores usan todos los días 🌐:</p>
+<ul>
+  <li><strong>Firebase</strong>: gestiona usuarios, bases de datos y hosting directamente desde el agente</li>
+  <li><strong>Bases de datos</strong>: PostgreSQL, SQLite — el agente puede hacer consultas sin que escribas SQL</li>
+  <li><strong>Chrome DevTools</strong>: el agente puede abrir un navegador, inspeccionar páginas y depurar problemas visuales</li>
+</ul>
+<p>Cada herramienta viene con un "formulario" (schema) que describe exactamente qué información necesita. Es como pedir comida por una app: seleccionas opciones de un menú estructurado en vez de gritar tu pedido al aire.</p>`,
         tip: 'Explora los servidores MCP de la comunidad en npmjs.com buscando "@modelcontextprotocol/server-". Hay adaptadores para casi cualquier servicio popular.',
+      },
+    ],
+    quiz: [
+      {
+        question: '¿Cuál es la ventaja principal de MCP sobre ejecutar comandos directos como gcloud o firebase en la terminal?',
+        options: [
+          'MCP es más rápido que los comandos de terminal',
+          'MCP proporciona tipificación y descubrimiento — cada herramienta tiene un schema que describe sus parámetros',
+          'MCP no requiere autenticación',
+          'MCP funciona sin conexión a internet',
+        ],
+        correctIndex: 1,
+        explanation: 'La ventaja clave de MCP es la tipificación y descubrimiento: cada herramienta tiene un schema JSON que describe exactamente qué parámetros acepta y qué retorna, permitiendo al agente usarla correctamente sin adivinanzas.',
+      },
+      {
+        question: '¿Por qué es mejor marcar la mayoría de herramientas como "lazy" cuando un servidor tiene muchas?',
+        options: [
+          'Porque las herramientas lazy son más seguras',
+          'Porque las herramientas eager consumen tokens del system prompt incluso cuando no se usan',
+          'Porque las herramientas lazy son más rápidas de ejecutar',
+          'Porque solo se permite tener 3 herramientas eager por servidor',
+        ],
+        correctIndex: 1,
+        explanation: 'Las herramientas eager se cargan al inicio de la sesión y consumen tokens del system prompt permanentemente, incluso si nunca se usan. Con muchas herramientas, esto desperdicia contexto valioso. Las lazy solo consumen tokens cuando se necesitan.',
+      },
+      {
+        question: '¿Qué componentes tiene la arquitectura MCP en Antigravity?',
+        options: [
+          'Solo el agente y la base de datos',
+          'Cliente MCP (agente), Servidor MCP (proceso externo), y Capa de recursos (backend real)',
+          'Un servidor central que controla todos los agentes',
+          'Solo servidores MCP sin cliente',
+        ],
+        correctIndex: 1,
+        explanation: 'La arquitectura MCP tiene tres capas: el Cliente MCP (el agente Antigravity que envía solicitudes), el Servidor MCP (proceso externo que traduce solicitudes), y la Capa de recursos (el servicio real como Firebase o PostgreSQL).',
       },
     ],
     keyTakeaways: [

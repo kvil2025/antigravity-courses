@@ -27,6 +27,42 @@ export const courses10to13: Record<number, CourseContent> = {
     ],
     estimatedTime: '3 horas',
     difficulty: 'Avanzado',
+    simpleSummary: 'Imagina que tienes un equipo de asistentes: uno es muy inteligente pero lento y caro, otro es rápido y barato pero menos analítico. Este curso te enseña a elegir automáticamente cuál asistente usar según la dificultad de cada tarea, como un gerente que asigna trabajo al empleado correcto para optimizar tiempo y dinero.',
+    quiz: [
+      {
+        question: '¿Cuál es la principal ventaja de usar múltiples modelos de IA en Antigravity?',
+        options: [
+          'Reducir costos asignando el modelo adecuado a cada tipo de tarea',
+          'Hacer que la IA sea más creativa',
+          'Evitar tener que escribir prompts',
+          'Conectarse a más servidores externos',
+        ],
+        correctIndex: 0,
+        explanation: 'La diversidad de modelos permite usar el modelo más económico cuando la tarea es simple y reservar el más potente para tareas complejas, reduciendo costos entre un 40% y un 70%.',
+      },
+      {
+        question: '¿Qué es una "fallback chain" en el contexto de modelos híbridos?',
+        options: [
+          'Una lista de prompts de respaldo',
+          'Una cadena de modelos que se intentan secuencialmente cuando uno falla o excede su cuota',
+          'Un historial de errores del agente',
+          'Una técnica para encadenar respuestas de diferentes modelos',
+        ],
+        correctIndex: 1,
+        explanation: 'La fallback chain es una lista ordenada de modelos. Si el primero falla (por ejemplo, por límite de uso), Antigravity intenta automáticamente con el siguiente, garantizando que el agente nunca se detenga.',
+      },
+      {
+        question: '¿Por qué es importante configurar límites de presupuesto para los agentes autónomos?',
+        options: [
+          'Porque los modelos gratuitos son de mejor calidad',
+          'Para que el agente trabaje más rápido',
+          'Porque sin control, un agente en bucle puede consumir cientos de dólares en pocas horas',
+          'Porque Google requiere un presupuesto mínimo',
+        ],
+        correctIndex: 2,
+        explanation: 'Un agente autónomo puede ejecutar muchas iteraciones. Sin límites de presupuesto, los costos por tokens pueden escalar rápidamente de forma descontrolada.',
+      },
+    ],
     sections: [
       /* ── 10.1 ── */
       {
@@ -73,6 +109,22 @@ const modelRegistry = {
   <li><strong>Gemini 2.5 Flash:</strong> Velocidad y bajo costo, perfecto para operaciones repetitivas.</li>
   <li><strong>Modelos MCP:</strong> Modelos especializados conectados vía Model Context Protocol.</li>
 </ul>`,
+        simpleContent: `
+<p>
+  Piensa en Antigravity como una empresa con <strong>varios empleados</strong>, cada uno con habilidades diferentes. 🧑‍💼
+</p>
+<ul>
+  <li><strong>Gemini Pro</strong> es como el ingeniero senior: muy inteligente, resuelve problemas difíciles, pero cobra más por hora.</li>
+  <li><strong>Gemini Flash</strong> es como el asistente rápido: hace tareas sencillas en segundos y cuesta mucho menos.</li>
+  <li><strong>Modelos externos (MCP)</strong> son como consultores especializados que traes para temas muy específicos.</li>
+</ul>
+<p>
+  La clave es <strong>no usar al ingeniero senior para fotocopiar documentos</strong>. Cada tarea tiene su modelo ideal y Antigravity sabe elegir automáticamente. 💡
+</p>`,
+        exercise: `
+<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"¿Qué modelos de IA tengo disponibles en este proyecto y cuál me recomiendas para corregir un error de ortografía en un archivo?"</div>
+<div class="exercise-success">✅ Si el agente te lista los modelos y recomienda el más rápido/económico — ¡completaste el ejercicio!</div>`,
         tip: 'Usa el comando "agy model list" en la terminal para ver todos los modelos disponibles y su estado actual de cuota.',
       },
       /* ── 10.2 ── */
@@ -127,6 +179,18 @@ function selectModel(taskDescription: string): TaskRoute {
   <li>Las tareas de <strong>baja complejidad</strong> (formato, renombrado) usan Flash.</li>
   <li>El <strong>fallback</strong> siempre apunta al modelo más capaz para evitar fallos.</li>
 </ul>`,
+        simpleContent: `
+<p>
+  Imagina un <strong>hospital</strong>: no envías todos los pacientes al cirujano jefe. 🏥
+</p>
+<ul>
+  <li>Un <strong>resfriado</strong> lo atiende el médico general (modelo rápido y barato).</li>
+  <li>Una <strong>cirugía compleja</strong> la hace el especialista (modelo potente).</li>
+  <li>Una <strong>emergencia crítica</strong> va directo al mejor doctor disponible.</li>
+</ul>
+<p>
+  Antigravity hace exactamente esto con tus tareas de programación. Analiza lo que le pides y decide automáticamente qué "doctor" asignar. Las tareas simples como cambiar un nombre van al modelo rápido. Las tareas complejas como rediseñar la arquitectura van al modelo inteligente. 🎯
+</p>`,
         warning: 'No asignes tareas de seguridad o auditoría a modelos rápidos. Un error en el análisis de vulnerabilidades puede ser costoso.',
       },
       /* ── 10.3 ── */
@@ -179,6 +243,22 @@ function selectModel(taskDescription: string): TaskRoute {
   <li><strong>fallbackChain:</strong> Orden de prioridad cuando un modelo no está disponible.</li>
   <li><strong>quotaLimits:</strong> Previene exceder los límites de la API.</li>
 </ul>`,
+        simpleContent: `
+<p>
+  La configuración multi-modelo es como tener un <strong>plan de emergencia</strong> para tu equipo. ⛑️
+</p>
+<ul>
+  <li>Defines quién es tu <strong>trabajador principal</strong> (modelo por defecto).</li>
+  <li>Si ese trabajador está ocupado o no disponible, automáticamente entra el <strong>siguiente en la lista</strong>.</li>
+  <li>Es como la cadena de mando en una empresa: si el gerente no está, el subgerente toma las decisiones.</li>
+</ul>
+<p>
+  Todo esto se configura en un archivo de texto simple. Una vez configurado, Antigravity cambia de modelo automáticamente sin que tú tengas que hacer nada. ¡Tu agente nunca se detiene! 🔄
+</p>`,
+        exercise: `
+<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Revisa la configuración de modelos de este proyecto y dime qué cadena de fallback tengo configurada. Si no tengo una, crea una configuración recomendada."</div>
+<div class="exercise-success">✅ Si el agente analiza tu configuración y te muestra o crea una fallback chain — ¡completaste el ejercicio!</div>`,
         tip: 'Configura alertas de cuota en tu proyecto de Google Cloud para recibir notificaciones antes de alcanzar el límite de requests.',
       },
       /* ── 10.4 ── */
@@ -237,6 +317,18 @@ function analyzeCost(logs: SessionLog[]): CostReport {
   <li><strong>Monitoreo continuo:</strong> Revisa reportes de costo después de cada sesión.</li>
   <li><strong>Cache de respuestas:</strong> Reutiliza resultados para prompts repetidos.</li>
 </ul>`,
+        simpleContent: `
+<p>
+  Controlar los costos de la IA es como <strong>controlar el presupuesto del hogar</strong>. 💰
+</p>
+<ul>
+  <li>Puedes poner un <strong>límite diario</strong> de gasto, como cuando fijas un presupuesto semanal para compras.</li>
+  <li>La estrategia más inteligente es <strong>empezar con lo económico</strong>: prueba con el modelo barato primero y solo usa el caro si realmente se necesita.</li>
+  <li>Antigravity te genera <strong>reportes de cuánto gastaste</strong>, en qué lo gastaste, y te avisa si estás por pasarte del límite.</li>
+</ul>
+<p>
+  Sin estos controles, es como dejar la tarjeta de crédito sin límite en una tienda — ¡los gastos pueden dispararse! ⚠️
+</p>`,
         warning: 'Sin control de costos, un agente autónomo ejecutando tareas en bucle puede consumir cientos de dólares en pocas horas. Siempre configura límites.',
       },
       /* ── 10.5 ── */
@@ -308,6 +400,18 @@ async function runBenchmark(
   <li>Mide <strong>calidad</strong> (tests pasados), <strong>velocidad</strong> y <strong>costo</strong>.</li>
   <li>Automatiza benchmarks en CI/CD para detectar regresiones de calidad.</li>
 </ul>`,
+        simpleContent: `
+<p>
+  Un benchmark es como una <strong>prueba de manejo</strong> para tus modelos de IA. 🏎️
+</p>
+<ul>
+  <li>Le das la <strong>misma tarea</strong> a cada modelo y comparas quién la hizo mejor, más rápido y más barato.</li>
+  <li>Es como probar tres autos en la misma pista: uno será más veloz, otro más económico, y otro más cómodo.</li>
+  <li>Antigravity automatiza estas pruebas para que no tengas que hacerlas manualmente.</li>
+</ul>
+<p>
+  Lo importante es usar <strong>tareas reales de tu proyecto</strong>, no ejercicios genéricos. Así descubres cuál modelo funciona mejor para <em>tu</em> tipo de trabajo específico. 📊
+</p>`,
         tip: 'Crea un directorio benchmarks/ en tu proyecto con tareas reales. Ejecuta "agy benchmark run" para obtener un reporte comparativo automático.',
       },
     ],
@@ -339,6 +443,42 @@ async function runBenchmark(
     ],
     estimatedTime: '4 horas',
     difficulty: 'Avanzado',
+    simpleSummary: 'Cuando tu código tiene un error, normalmente tú buscas el problema, lo arreglas y verificas que funcione. Este curso te enseña a que el agente de IA haga todo ese proceso solo — como un mecánico robot que detecta la falla del auto, la repara y prueba que el motor funcione, todo sin que tú toques nada.',
+    quiz: [
+      {
+        question: '¿Qué patrón sigue el loop de depuración autónoma de Antigravity?',
+        options: [
+          'Escribir → Compilar → Publicar',
+          'Red → Fix → Green (detectar error, corregir, verificar)',
+          'Planificar → Diseñar → Implementar',
+          'Preguntar → Esperar → Ejecutar',
+        ],
+        correctIndex: 1,
+        explanation: 'El loop sigue el patrón Red → Fix → Green, inspirado en TDD: detecta el error (rojo), aplica la corrección, y verifica que los tests pasen (verde). Este ciclo se repite automáticamente.',
+      },
+      {
+        question: '¿Qué es el "sandbox patching" en Antigravity?',
+        options: [
+          'Editar código directamente en producción',
+          'Aplicar fixes en un workspace aislado (branch) para no afectar el código principal',
+          'Escribir tests antes del código',
+          'Enviar parches por email al equipo',
+        ],
+        correctIndex: 1,
+        explanation: 'El sandbox patching crea una copia aislada del código donde el agente experimenta con soluciones. Si el fix falla, simplemente se descarta sin afectar nada. Es como practicar una receta en una cocina de prueba.',
+      },
+      {
+        question: '¿Cuál es la mejor defensa contra regresiones durante la depuración autónoma?',
+        options: [
+          'No hacer cambios en el código',
+          'Comparar snapshots de tests antes y después de cada fix',
+          'Usar siempre el modelo más caro',
+          'Desactivar los tests durante la depuración',
+        ],
+        correctIndex: 1,
+        explanation: 'Los snapshots capturan el estado de todos los tests antes del fix. Después del fix, se compara: si algún test que antes pasaba ahora falla, se revierte automáticamente el cambio.',
+      },
+    ],
     sections: [
       /* ── 11.1 ── */
       {
@@ -405,6 +545,23 @@ async function debugLoop(
   <li><strong>Fix:</strong> Genera un parche usando el contexto del código fuente.</li>
   <li><strong>Verificación:</strong> Re-ejecuta los tests para confirmar la corrección.</li>
 </ul>`,
+        simpleContent: `
+<p>
+  Piensa en el agente como un <strong>doctor que atiende pacientes automáticamente</strong>. 🩺
+</p>
+<ul>
+  <li><strong>Paso 1:</strong> Hace un examen (ejecuta los tests) para detectar qué está mal.</li>
+  <li><strong>Paso 2:</strong> Analiza los síntomas (lee el mensaje de error) para encontrar la causa.</li>
+  <li><strong>Paso 3:</strong> Receta un tratamiento (genera y aplica la corrección).</li>
+  <li><strong>Paso 4:</strong> Hace otro examen para verificar que el paciente mejoró.</li>
+</ul>
+<p>
+  Si el paciente sigue enfermo, repite el proceso con un tratamiento diferente. Esto se repite hasta que todo funciona o hasta que decide que necesita la opinión de un especialista (tú). 🔄
+</p>`,
+        exercise: `
+<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Ejecuta los tests de este proyecto. Si alguno falla, analiza el error, propón una corrección y verifica que funcione. Muéstrame el historial de cada intento."</div>
+<div class="exercise-success">✅ Si el agente ejecuta tests, identifica errores y te muestra su proceso de corrección paso a paso — ¡completaste el ejercicio!</div>`,
         tip: 'Configura maxIterations entre 3 y 7. Menos de 3 puede ser insuficiente para bugs complejos; más de 7 indica que el agente necesita intervención humana.',
       },
       /* ── 11.2 ── */
@@ -465,6 +622,19 @@ async function diagnoseError(error: ParsedError): Promise&lt;Diagnosis&gt; {
   <li><strong>git log:</strong> Identifica commits recientes que podrían haber introducido el bug.</li>
   <li><strong>Contexto expandido:</strong> Lee 10 líneas antes y después del error para entender el flujo.</li>
 </ul>`,
+        simpleContent: `
+<p>
+  El diagnóstico autónomo es como un <strong>detective investigando un crimen</strong>. 🔍
+</p>
+<ul>
+  <li><strong>Sigue las pistas:</strong> El agente lee el mensaje de error como una nota en la escena del crimen.</li>
+  <li><strong>Busca sospechosos:</strong> Revisa qué partes del código están relacionadas con el problema.</li>
+  <li><strong>Revisa el historial:</strong> Mira qué cambios se hicieron recientemente (¿alguien tocó algo que no debía?).</li>
+  <li><strong>Forma una teoría:</strong> Antes de actuar, el agente verifica su hipótesis para no acusar al inocente.</li>
+</ul>
+<p>
+  Todo esto sucede en segundos, sin que tengas que buscar manualmente en cientos de archivos. El agente conecta las pistas solo. 🕵️
+</p>`,
         warning: 'El diagnóstico autónomo funciona mejor en codebases con buena cobertura de tests. Sin tests, el agente no tiene señal clara de qué está roto.',
       },
       /* ── 11.3 ── */
@@ -522,6 +692,23 @@ async function sandboxPatch(error: ParsedError): Promise&lt;PatchResult&gt; {
   <li><strong>Paralelismo:</strong> Múltiples estrategias de fix se prueban simultáneamente.</li>
   <li><strong>Rollback gratuito:</strong> Descartar un branch fallido no tiene costo.</li>
 </ul>`,
+        simpleContent: `
+<p>
+  El sandbox patching es como <strong>practicar una receta en una cocina de prueba</strong> antes de servir el plato al cliente. 👨‍🍳
+</p>
+<ul>
+  <li>El agente crea una <strong>copia separada</strong> de tu proyecto (como una cocina de prueba).</li>
+  <li>Experimenta con la corrección ahí, sin tocar el proyecto real.</li>
+  <li>Si la receta sale bien, la pasa a la cocina principal.</li>
+  <li>Si sale mal, simplemente <strong>tira todo a la basura</strong> sin consecuencias.</li>
+</ul>
+<p>
+  Puede incluso probar <strong>varias recetas al mismo tiempo</strong> en cocinas diferentes y quedarse con la mejor. ¡Cero riesgo! 🛡️
+</p>`,
+        exercise: `
+<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Crea un branch de prueba, intenta refactorizar el archivo más grande de este proyecto para mejorar su legibilidad, ejecuta los tests, y dime si los cambios son seguros para integrar."</div>
+<div class="exercise-success">✅ Si el agente trabaja en un branch aislado y te reporta los resultados sin modificar tu código principal — ¡completaste el ejercicio!</div>`,
         tip: 'Usa workspace: "branch" para bugs críticos y workspace: "inherit" para fixes triviales donde el riesgo de regresión es bajo.',
       },
       /* ── 11.4 ── */
@@ -598,6 +785,19 @@ async function verifyCyclically(
   <li><strong>Etapas opcionales:</strong> El build de producción advierte pero no bloquea.</li>
   <li><strong>Reporte detallado:</strong> Cada etapa registra su resultado para análisis posterior.</li>
 </ul>`,
+        simpleContent: `
+<p>
+  La verificación cíclica es como un <strong>control de calidad en una fábrica</strong>. 🏭
+</p>
+<ul>
+  <li><strong>Primera inspección:</strong> Verifica que la pieza reparada funcione bien.</li>
+  <li><strong>Segunda inspección:</strong> Verifica que las piezas vecinas no se hayan afectado.</li>
+  <li><strong>Inspección general:</strong> Revisa que toda la máquina siga funcionando correctamente.</li>
+  <li><strong>Prueba final:</strong> Enciende toda la fábrica para asegurar que nada se rompió.</li>
+</ul>
+<p>
+  Si alguna inspección falla, el agente vuelve al principio y prueba otra solución. Es un ciclo que garantiza que el "arreglo" no cause un problema nuevo. 🔁
+</p>`,
       },
       /* ── 11.5 ── */
       {
@@ -659,6 +859,19 @@ async function antiRegressionGuard(
   <li><strong>Commit solo en verde:</strong> Los cambios solo se persisten si mejoran el estado.</li>
   <li><strong>Log de regresiones:</strong> Registra qué tests regresaron para análisis humano.</li>
 </ul>`,
+        simpleContent: `
+<p>
+  Los patrones anti-regresión son como una <strong>regla de oro en medicina: "Primero, no hacer daño"</strong>. 🏥
+</p>
+<ul>
+  <li>Antes de "operar" (aplicar un fix), el agente toma una <strong>foto del estado actual</strong> de todo.</li>
+  <li>Después de la operación, compara: ¿algo que antes funcionaba ahora está roto?</li>
+  <li>Si detecta que empeoró algo, <strong>revierte todo automáticamente</strong>, como un "Ctrl+Z" inteligente.</li>
+  <li>Solo guarda los cambios si el resultado final es <strong>igual o mejor</strong> que antes.</li>
+</ul>
+<p>
+  Es la garantía de que el agente nunca puede empeorar tu código, solo mejorarlo. 🛡️
+</p>`,
         warning: 'El rollback automático con "git checkout -- ." descarta TODOS los cambios no commiteados. Asegúrate de hacer commits parciales antes de experimentar.',
       },
     ],
@@ -690,6 +903,42 @@ async function antiRegressionGuard(
     ],
     estimatedTime: '5 horas',
     difficulty: 'Experto',
+    simpleSummary: 'Imagina que eres el director de una película: tú decides la historia, los personajes y las escenas, pero no operas la cámara ni editas el video. En Vibe Coding, tú eres el director creativo y el agente de IA es tu equipo de producción completo. Le describes tu visión y él construye toda la aplicación, mientras tú supervisas que el resultado sea exactamente lo que querías.',
+    quiz: [
+      {
+        question: '¿Cuál es el rol del humano en el flujo de Vibe Coding?',
+        options: [
+          'Escribir todo el código manualmente',
+          'Actuar como arquitecto y revisor, tomando decisiones de alto nivel',
+          'Solo observar sin intervenir',
+          'Corregir los errores del agente línea por línea',
+        ],
+        correctIndex: 1,
+        explanation: 'En Vibe Coding, el humano es el cerebro estratégico que toma decisiones de arquitectura, seguridad y UX, mientras el agente ejecuta la implementación. Es un skill avanzado, no un atajo.',
+      },
+      {
+        question: '¿Qué hace el comando /goal en Antigravity?',
+        options: [
+          'Muestra las metas del proyecto',
+          'Activa el modo autónomo extendido para que el agente complete un objetivo completo sin detenerse',
+          'Define los objetivos de aprendizaje del curso',
+          'Configura los modelos de IA disponibles',
+        ],
+        correctIndex: 1,
+        explanation: 'El comando /goal indica al agente que trabaje de forma autónoma y exhaustiva hasta completar el objetivo. A diferencia de un prompt normal, el agente no se detiene a pedir confirmación en cada paso.',
+      },
+      {
+        question: '¿Qué son los "quality gates" en el contexto del Vibe Coding?',
+        options: [
+          'Puertas físicas de seguridad en la oficina',
+          'Verificaciones automáticas que el agente debe pasar después de cada milestone',
+          'Niveles de dificultad del curso',
+          'Permisos de acceso al repositorio',
+        ],
+        correctIndex: 1,
+        explanation: 'Los quality gates son verificaciones automáticas (compilación, tests, lint, build) que el agente ejecuta después de cada hito. Si un gate falla, el agente corrige el problema antes de avanzar.',
+      },
+    ],
     sections: [
       /* ── 12.1 ── */
       {
@@ -738,6 +987,19 @@ async function antiRegressionGuard(
   <li>Requiere conocimiento profundo de arquitectura y mejores prácticas.</li>
   <li>El objetivo es maximizar la productividad sin sacrificar la calidad.</li>
 </ul>`,
+        simpleContent: `
+<p>
+  El Vibe Coding es como ser el <strong>director de una orquesta</strong>. 🎼
+</p>
+<ul>
+  <li>Tú <strong>no tocas ningún instrumento</strong>, pero sabes exactamente cómo debe sonar la música.</li>
+  <li>Le dices a cada músico (el agente) qué tocar, cuándo y con qué intensidad.</li>
+  <li>Si algo suena mal, das indicaciones para corregirlo.</li>
+  <li>El resultado final depende de la <strong>calidad de tu dirección</strong>, no de tu habilidad tocando violín.</li>
+</ul>
+<p>
+  No es "ser flojo" — es un skill avanzado. Necesitas saber de arquitectura de software para poder dirigir bien. Un buen director sabe más de música que muchos músicos individuales. 🎯
+</p>`,
         tip: 'El Vibe Coding funciona mejor cuando ya dominas el stack tecnológico. No delegues lo que no puedes revisar.',
       },
       /* ── 12.2 ── */
@@ -792,6 +1054,22 @@ Crea una aplicación de gestión de inventarios con:
   <li><strong>Establece restricciones</strong> de seguridad como requisitos no negociables.</li>
   <li><strong>Describe la UX</strong> con suficiente detalle para que el agente implemente sin preguntar.</li>
 </ul>`,
+        simpleContent: `
+<p>
+  Tu rol como arquitecto es como ser el <strong>arquitecto de un edificio</strong>. 🏗️
+</p>
+<ul>
+  <li>Tú decides cuántos pisos tendrá, dónde van las ventanas, qué materiales usar y cómo se verá.</li>
+  <li>Los constructores (el agente) hacen el trabajo físico siguiendo tus planos.</li>
+  <li>Las decisiones importantes <strong>siempre son tuyas</strong>: seguridad, diseño, tecnología.</li>
+</ul>
+<p>
+  La clave es dar instrucciones <strong>claras y detalladas</strong>. Si le dices al constructor "hazme una casa bonita", el resultado será impredecible. Pero si le das planos detallados con medidas exactas, el resultado será exactamente lo que imaginaste. ✏️
+</p>`,
+        exercise: `
+<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Crea un archivo README.md profesional para este proyecto que incluya: descripción del proyecto, stack tecnológico, instrucciones de instalación, estructura de carpetas, y guía de contribución. Usa el estilo de los mejores repositorios open source."</div>
+<div class="exercise-success">✅ Si el agente genera un README completo y profesional sin que le digas exactamente qué escribir en cada sección — ¡completaste el ejercicio!</div>`,
         warning: 'Nunca delegues decisiones de seguridad al agente sin restricciones explícitas. Siempre define reglas de seguridad como requisitos obligatorios.',
       },
       /* ── 12.3 ── */
@@ -847,6 +1125,22 @@ Crea una aplicación de gestión de inventarios con:
   <li>La sección "Lo que NO hacer" previene decisiones no deseadas.</li>
   <li>El agente hará commits incrementales para facilitar la revisión.</li>
 </ul>`,
+        simpleContent: `
+<p>
+  El comando <strong>/goal</strong> es como darle a tu asistente una <strong>misión completa</strong> en vez de instrucciones paso a paso. 🚀
+</p>
+<ul>
+  <li>En vez de decir "haz esto, ahora esto, ahora esto otro", le dices: <strong>"Quiero un dashboard completo con gráficos y filtros"</strong>.</li>
+  <li>El agente crea un plan, lo ejecuta paso a paso, y te va mostrando el progreso.</li>
+  <li>Es como contratar a alguien y darle el proyecto completo, no microgestionar cada tarea.</li>
+</ul>
+<p>
+  El truco es incluir una lista de <strong>"lo que NO quiero"</strong>. Sin límites claros, el agente podría tomar caminos que no te gustan. Es como decirle al chef: "Cocina lo que quieras, pero NO uses mariscos". 🚫
+</p>`,
+        exercise: `
+<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"/goal Analiza este proyecto completo y genera un reporte con: estructura de archivos, dependencias usadas, posibles mejoras de rendimiento, y un diagrama de la arquitectura actual. Guarda el reporte como ANALYSIS.md en la raíz del proyecto."</div>
+<div class="exercise-success">✅ Si el agente trabaja de forma autónoma analizando múltiples archivos y genera un reporte completo — ¡completaste el ejercicio!</div>`,
         tip: 'Usa /goal para tareas que tomarían más de 2 horas manualmente. Para tareas cortas, un prompt normal es más eficiente.',
       },
       /* ── 12.4 ── */
@@ -931,6 +1225,19 @@ async function runQualityGates(
   <li><strong>Autofix selectivo:</strong> Solo para problemas seguros de resolver automáticamente.</li>
   <li><strong>Revisión humana obligatoria:</strong> Secretos y builds nunca se auto-corrigen.</li>
 </ul>`,
+        simpleContent: `
+<p>
+  Los quality gates son como los <strong>puntos de control en una carrera de autos</strong>. 🏁
+</p>
+<ul>
+  <li>Después de cada tramo (milestone), el auto pasa por un <strong>punto de inspección</strong>.</li>
+  <li>Si los frenos no funcionan, <strong>no puede continuar</strong> hasta arreglarlos.</li>
+  <li>Algunos problemas los puede arreglar el mecánico (autofix), pero otros necesitan al ingeniero jefe (tú).</li>
+  <li>El tema de <strong>seguridad siempre requiere aprobación humana</strong> — nunca se auto-corrige.</li>
+</ul>
+<p>
+  Sin estos controles, el Vibe Coding sería irresponsable. Es como conducir sin cinturón: puede funcionar, pero no es profesional. 🔒
+</p>`,
         warning: 'Nunca confíes ciegamente en el código generado por IA. Revisa especialmente: manejo de autenticación, queries a la base de datos, y lógica de negocio.',
       },
       /* ── 12.5 ── */
@@ -996,6 +1303,18 @@ TypeScript + Firebase Auth.
   <li>Los <strong>commits incrementales</strong> permiten revertir problemas sin perder progreso.</li>
   <li>Las <strong>restricciones claras</strong> previenen que el agente tome atajos.</li>
 </ul>`,
+        simpleContent: `
+<p>
+  Estos son ejemplos reales de lo que se puede lograr con Vibe Coding. 🌟
+</p>
+<ul>
+  <li><strong>Caso 1:</strong> Una página web premium completa en 45 minutos. Como si un decorador de interiores armara una habitación entera con un solo briefing.</li>
+  <li><strong>Caso 2:</strong> Un panel de datos con gráficos y conexiones a bases de datos en 3 horas, revisando cada avance antes de continuar.</li>
+  <li><strong>Caso 3:</strong> Migración de 12 archivos de código antiguo a tecnología moderna, archivo por archivo, sin romper nada existente.</li>
+</ul>
+<p>
+  La lección más importante: los mejores resultados vienen de <strong>instrucciones detalladas</strong>. Mientras más claro seas sobre lo que quieres (y lo que NO quieres), mejor será el resultado. ✍️
+</p>`,
         tip: 'Documenta tus mejores prompts de /goal en un directorio prompts/ del proyecto. Los buenos prompts son reutilizables y mejoran con el tiempo.',
       },
     ],
@@ -1027,6 +1346,42 @@ TypeScript + Firebase Auth.
     ],
     estimatedTime: '5 horas',
     difficulty: 'Experto',
+    simpleSummary: 'Hasta ahora usaste Antigravity como una herramienta dentro de tu editor. Este curso te enseña a construir tus propios agentes de IA como piezas de tu aplicación. Es como pasar de ser pasajero de un auto a construir tus propios vehículos personalizados — con motor, volante y frenos a tu medida, listos para funcionar en producción.',
+    quiz: [
+      {
+        question: '¿Qué permite hacer el Antigravity SDK que no se puede hacer desde el editor?',
+        options: [
+          'Escribir código más rápido',
+          'Crear agentes programáticos que forman parte de tu propia aplicación',
+          'Acceder a más modelos de IA',
+          'Tener mejor autocompletado',
+        ],
+        correctIndex: 1,
+        explanation: 'El SDK permite crear, configurar y desplegar agentes de IA como componentes internos de tu arquitectura. Ya no son solo asistentes de desarrollo, sino partes funcionales de tu aplicación.',
+      },
+      {
+        question: '¿Qué patrón de orquestación multi-agente se describe en el curso?',
+        options: [
+          'Round-robin: cada agente toma turnos',
+          'Supervisor-Worker: un líder descompone tareas y las asigna a agentes especializados',
+          'Peer-to-peer: todos los agentes son iguales',
+          'Pipeline: cada agente pasa su resultado al siguiente',
+        ],
+        correctIndex: 1,
+        explanation: 'El patrón Supervisor-Worker tiene un agente líder que analiza la tarea, la divide en subtareas, y las asigna a agentes especializados (frontend, backend, QA) que trabajan en paralelo.',
+      },
+      {
+        question: '¿Por qué es esencial configurar maxIterations en agentes de producción?',
+        options: [
+          'Para que el agente trabaje más rápido',
+          'Para cumplir con regulaciones de la UE',
+          'Para prevenir que el agente entre en un loop infinito que consume recursos indefinidamente',
+          'Para limitar el número de archivos que puede crear',
+        ],
+        correctIndex: 2,
+        explanation: 'Sin límite de iteraciones, un agente puede quedar atrapado en un ciclo infinito intentando resolver un problema, consumiendo tokens y recursos sin parar. maxIterations es un safety net esencial.',
+      },
+    ],
     sections: [
       /* ── 13.1 ── */
       {
@@ -1076,6 +1431,23 @@ console.log('SDK Status:', status);
   <li><strong>Google Cloud nativo:</strong> Autenticación y despliegue integrados.</li>
   <li><strong>Declarativo:</strong> Define qué hace el agente, no cómo lo hace.</li>
 </ul>`,
+        simpleContent: `
+<p>
+  El SDK es como pasar de <strong>usar un taxi a tener tu propia flota de vehículos</strong>. 🚗
+</p>
+<ul>
+  <li>Hasta ahora usabas Antigravity como un servicio (el taxi). Tú le decías a dónde ir y él te llevaba.</li>
+  <li>Con el SDK, puedes <strong>construir tus propios "vehículos IA"</strong> personalizados.</li>
+  <li>Defines qué hace cada agente, qué herramientas tiene, y lo integras dentro de tu propia aplicación.</li>
+  <li>Todo se conecta automáticamente con Google Cloud, así que no tienes que preocuparte por la infraestructura.</li>
+</ul>
+<p>
+  Instalarlo es tan fácil como agregar cualquier otra librería a tu proyecto. Un comando y listo. 📦
+</p>`,
+        exercise: `
+<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Explícame qué es el Google Antigravity SDK, para qué sirve, y dame un ejemplo práctico de cuándo usaría el SDK en vez de simplemente chatear contigo en el editor."</div>
+<div class="exercise-success">✅ Si el agente te explica la diferencia entre usar Antigravity como herramienta vs. como SDK programático — ¡completaste el ejercicio!</div>`,
         tip: 'Usa Application Default Credentials (ADC) para desarrollo local: ejecuta "gcloud auth application-default login" antes de usar el SDK.',
       },
       /* ── 13.2 ── */
@@ -1142,6 +1514,19 @@ console.log(review.findings); // lista de issues encontrados
   <li><strong>maxIterations:</strong> Límite de ciclos para prevenir loops infinitos.</li>
   <li><strong>temperature:</strong> Control de creatividad vs. precisión en respuestas.</li>
 </ul>`,
+        simpleContent: `
+<p>
+  La Agent API te permite <strong>crear empleados virtuales especializados</strong>. 👨‍💻
+</p>
+<ul>
+  <li>Defines su <strong>personalidad</strong>: "Eres un revisor de código estricto".</li>
+  <li>Le das <strong>herramientas</strong>: puede leer archivos, buscar en el código, ejecutar comandos.</li>
+  <li>Pones <strong>límites</strong>: máximo 10 intentos, baja creatividad para tareas de análisis.</li>
+  <li>Luego lo "contratas" y le asignas tareas cuando necesites.</li>
+</ul>
+<p>
+  Es como crear un perfil de empleado con su descripción de cargo, herramientas de trabajo y reglas. Una vez creado, puedes reutilizarlo cuantas veces quieras para diferentes proyectos. 📋
+</p>`,
         warning: 'Siempre configura maxIterations para agentes en producción. Sin límite, un agente puede entrar en un loop infinito que consume recursos indefinidamente.',
       },
       /* ── 13.3 ── */
@@ -1223,6 +1608,18 @@ const smartAssistant = defineAgent({
   <li><strong>Hooks:</strong> Callbacks para errores, completitud y eventos del ciclo de vida.</li>
   <li><strong>Auditoría:</strong> Registro completo de cada acción para compliance.</li>
 </ul>`,
+        simpleContent: `
+<p>
+  Los agentes programáticos son como empleados con <strong>memoria y protocolos avanzados</strong>. 🧠
+</p>
+<ul>
+  <li><strong>Memoria:</strong> Recuerdan lo que aprendieron en sesiones anteriores. Como un asistente que sabe que prefieres café sin azúcar porque te lo preguntó una vez.</li>
+  <li><strong>Middleware:</strong> Como un supervisor silencioso que registra cada acción que hace el empleado en un cuaderno de auditoría.</li>
+  <li><strong>Hooks:</strong> Alarmas automáticas: si algo sale mal, te avisa por Slack. Si termina bien, guarda las métricas.</li>
+</ul>
+<p>
+  Todo esto convierte a un simple chatbot en un <strong>trabajador inteligente y confiable</strong> que mejora con cada interacción. 📈
+</p>`,
         tip: 'Usa el middleware de auditoría en producción para mantener un log de todo lo que hace cada agente. Esto es esencial para debugging y compliance.',
       },
       /* ── 13.4 ── */
@@ -1300,6 +1697,23 @@ const result = await teamOrchestrator.run({
   <li><strong>QA integrado:</strong> El agente QA valida cada entrega antes de integrar al proyecto.</li>
   <li><strong>Modelos mixtos:</strong> Cada agente usa el modelo más adecuado para su rol.</li>
 </ul>`,
+        simpleContent: `
+<p>
+  Los sistemas multi-agente son como tener un <strong>equipo completo de trabajo</strong> en vez de un solo empleado. 👥
+</p>
+<ul>
+  <li>Hay un <strong>jefe de equipo</strong> (supervisor) que recibe la tarea y la divide en partes.</li>
+  <li>Un <strong>diseñador</strong> se encarga de la parte visual (frontend).</li>
+  <li>Un <strong>ingeniero</strong> construye la parte técnica (backend).</li>
+  <li>Un <strong>inspector de calidad</strong> revisa que todo funcione correctamente.</li>
+</ul>
+<p>
+  Todos trabajan <strong>al mismo tiempo</strong> en sus áreas. Es como una cadena de montaje donde cada especialista hace lo que mejor sabe hacer. El resultado: proyectos más grandes hechos más rápido. ⚡
+</p>`,
+        exercise: `
+<div class="exercise-prompt">Abre Antigravity y escribe este prompt:</div>
+<div class="exercise-code">"Actúa como un equipo de desarrollo: primero analiza la estructura de este proyecto como un arquitecto, luego identifica 3 mejoras que haría un desarrollador frontend y 3 que haría un desarrollador backend. Presenta los hallazgos como si fueran reportes de diferentes personas."</div>
+<div class="exercise-success">✅ Si el agente te presenta perspectivas diferenciadas como si fueran distintos miembros de un equipo — ¡completaste el ejercicio!</div>`,
         warning: 'Los sistemas multi-agente multiplican los costos. Un equipo de 3 agentes consume 3x tokens. Monitorea costos activamente en producción.',
       },
       /* ── 13.5 ── */
@@ -1380,6 +1794,19 @@ for (const action of response.actions) {
   <li><strong>Templates:</strong> Proyectos base listos para clonar y personalizar.</li>
   <li><strong>Community:</strong> Foro de desarrolladores para preguntas y mejores prácticas.</li>
 </ul>`,
+        simpleContent: `
+<p>
+  Los Codelabs son como <strong>recetas de cocina paso a paso</strong> para aprender a crear tus propios agentes. 📚
+</p>
+<ul>
+  <li><strong>Nivel 1:</strong> Recetas básicas — crear tu primer agente, darle herramientas, añadir memoria.</li>
+  <li><strong>Nivel 2:</strong> Recetas intermedias — agregar supervisión, integrar con Firebase, hacer tests.</li>
+  <li><strong>Nivel 3:</strong> Recetas avanzadas — coordinar varios agentes, publicar en la nube, monitorear.</li>
+  <li><strong>Nivel 4:</strong> Recetas de chef — agentes con búsqueda inteligente, modelos personalizados, escala masiva.</li>
+</ul>
+<p>
+  Cada codelab viene con el código listo para ejecutar. Solo sigue las instrucciones paso a paso, como seguir una receta, y al final tendrás tu propio agente funcionando. 🎓
+</p>`,
         tip: 'Empieza con el codelab AGY-101 aunque seas experto. Cada codelab introduce patrones que se reutilizan en los niveles avanzados.',
       },
     ],

@@ -2,7 +2,7 @@
    Course Detail Page — Antigravity Courses
    ============================================ */
 
-import type { CourseContent } from './types';
+import type { CourseContent, QuizQuestion } from './types';
 import { courseMeta } from './courseData';
 import Router from './router';
 
@@ -25,6 +25,29 @@ export async function loadAllCourseContent(): Promise<void> {
   contentLoaded = true;
 }
 
+// ─── View mode state ───────────────────────────────────────────
+type ViewMode = 'simple' | 'technical';
+
+function getViewMode(): ViewMode {
+  return (localStorage.getItem('agy-view-mode') as ViewMode) || 'simple';
+}
+
+function setViewMode(mode: ViewMode): void {
+  localStorage.setItem('agy-view-mode', mode);
+}
+
+// ─── Quiz state ────────────────────────────────────────────────
+function getQuizState(courseId: number): Record<number, number> {
+  const raw = localStorage.getItem(`agy-quiz-${courseId}`);
+  return raw ? JSON.parse(raw) : {};
+}
+
+function setQuizAnswer(courseId: number, questionIndex: number, answerIndex: number): void {
+  const state = getQuizState(courseId);
+  state[questionIndex] = answerIndex;
+  localStorage.setItem(`agy-quiz-${courseId}`, JSON.stringify(state));
+}
+
 // ─── SVG icons ─────────────────────────────────────────────────
 function svg(d: string, size = 20): string {
   return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
@@ -41,6 +64,10 @@ const icons = {
   tip: svg('<circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/>', 16),
   warn: svg('<path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>', 16),
   bookmark: svg('<path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/>', 16),
+  simple: svg('<circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>', 16),
+  code: svg('<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>', 16),
+  play: svg('<polygon points="5 3 19 12 5 21 5 3"/>', 16),
+  clipboard: svg('<rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>', 16),
 };
 
 const difficultyColors: Record<string, string> = {
@@ -54,7 +81,7 @@ const difficultyColors: Record<string, string> = {
 export async function renderCourseDetail(id: number): Promise<void> {
   const app = document.getElementById('app')!;
 
-  // Show loading state
+  // Loading state
   app.innerHTML = `
     <div class="container">
       <div class="course-detail__loading">
@@ -84,12 +111,9 @@ export async function renderCourseDetail(id: number): Promise<void> {
 
   const prevCourse = courseMeta.find((c) => c.id === id - 1);
   const nextCourse = courseMeta.find((c) => c.id === id + 1);
-
-  // Completion state
-  const completedSet = new Set<number>(
-    JSON.parse(localStorage.getItem('agy-completed') || '[]')
-  );
+  const completedSet = new Set<number>(JSON.parse(localStorage.getItem('agy-completed') || '[]'));
   const isCompleted = completedSet.has(id);
+  const currentMode = getViewMode();
 
   app.innerHTML = `
     <div class="container course-detail">
@@ -132,6 +156,30 @@ export async function renderCourseDetail(id: number): Promise<void> {
         </div>
       </header>
 
+      <!-- View Mode Toggle -->
+      <div class="view-toggle" id="view-toggle">
+        <button class="view-toggle__btn ${currentMode === 'simple' ? 'active' : ''}" data-mode="simple">
+          ${icons.simple}
+          <span>Modo Simple</span>
+        </button>
+        <button class="view-toggle__btn ${currentMode === 'technical' ? 'active' : ''}" data-mode="technical">
+          ${icons.code}
+          <span>Modo Técnico</span>
+        </button>
+        <div class="view-toggle__slider"></div>
+      </div>
+
+      <!-- Simple Summary (visible in simple mode) -->
+      ${content.simpleSummary ? `
+      <div class="simple-summary ${currentMode === 'simple' ? 'is-visible' : ''}" id="simple-summary">
+        <div class="simple-summary__icon">💡</div>
+        <div>
+          <strong>¿De qué va este curso?</strong>
+          <p>${content.simpleSummary}</p>
+        </div>
+      </div>
+      ` : ''}
+
       <!-- Objectives -->
       <section class="course-detail__objectives">
         <h2 class="course-detail__section-label">
@@ -167,6 +215,12 @@ export async function renderCourseDetail(id: number): Promise<void> {
               </a>
             </li>
           `).join('')}
+          <li>
+            <a href="#section-quiz" class="course-detail__toc-link course-detail__toc-link--quiz">
+              <span class="course-detail__toc-num">📝</span>
+              <span>Quiz de comprensión</span>
+            </a>
+          </li>
         </ol>
       </nav>
 
@@ -179,9 +233,21 @@ export async function renderCourseDetail(id: number): Promise<void> {
               <h2 class="course-detail__section-title">${section.title}</h2>
             </div>
 
-            <div class="course-detail__section-body">
+            <!-- Technical content -->
+            <div class="course-detail__section-body section-content--technical ${currentMode === 'technical' ? 'is-visible' : ''}">
               ${section.content}
             </div>
+
+            <!-- Simple content -->
+            ${section.simpleContent ? `
+            <div class="course-detail__section-body section-content--simple ${currentMode === 'simple' ? 'is-visible' : ''}">
+              ${section.simpleContent}
+            </div>
+            ` : `
+            <div class="course-detail__section-body section-content--simple ${currentMode === 'simple' ? 'is-visible' : ''}">
+              ${section.content}
+            </div>
+            `}
 
             ${section.tip ? `
               <div class="course-detail__callout course-detail__callout--tip">
@@ -202,9 +268,24 @@ export async function renderCourseDetail(id: number): Promise<void> {
                 </div>
               </div>
             ` : ''}
+
+            ${section.exercise ? `
+              <div class="exercise-block">
+                <div class="exercise-block__header">
+                  ${icons.play}
+                  <strong>Inténtalo tú</strong>
+                </div>
+                <div class="exercise-block__body">
+                  ${section.exercise}
+                </div>
+              </div>
+            ` : ''}
           </section>
         `).join('')}
       </div>
+
+      <!-- Quiz Section -->
+      ${content.quiz && content.quiz.length > 0 ? renderQuizSection(id, content.quiz) : ''}
 
       <!-- Key Takeaways -->
       <section class="course-detail__takeaways">
@@ -249,10 +330,73 @@ export async function renderCourseDetail(id: number): Promise<void> {
   `;
 
   // ─── Event Handlers ───────────────────────
-  document.getElementById('btn-back')?.addEventListener('click', () => {
-    Router.navigate('/');
-  });
+  setupDetailEvents(id, content);
+}
 
+// ─── Quiz Renderer ─────────────────────────────────────────────
+function renderQuizSection(courseId: number, questions: QuizQuestion[]): string {
+  const quizState = getQuizState(courseId);
+
+  return `
+    <section class="quiz-section" id="section-quiz">
+      <div class="quiz-section__header">
+        <h2 class="course-detail__section-label">
+          📝 Quiz de comprensión
+        </h2>
+        <p class="quiz-section__subtitle">Valida que has entendido los conceptos clave del curso.</p>
+      </div>
+
+      <div class="quiz-section__questions">
+        ${questions.map((q, qi) => {
+          const answered = quizState[qi] !== undefined;
+          const selectedIdx = quizState[qi];
+          const isCorrect = answered && selectedIdx === q.correctIndex;
+
+          return `
+            <div class="quiz-card ${answered ? (isCorrect ? 'quiz-card--correct' : 'quiz-card--wrong') : ''}" data-question="${qi}">
+              <div class="quiz-card__number">${qi + 1}</div>
+              <p class="quiz-card__question">${q.question}</p>
+              <div class="quiz-card__options">
+                ${q.options.map((opt, oi) => `
+                  <button class="quiz-option ${answered && oi === q.correctIndex ? 'quiz-option--correct' : ''} ${answered && oi === selectedIdx && oi !== q.correctIndex ? 'quiz-option--wrong' : ''} ${answered ? 'quiz-option--disabled' : ''}"
+                    data-question="${qi}" data-option="${oi}" ${answered ? 'disabled' : ''}>
+                    <span class="quiz-option__letter">${String.fromCharCode(65 + oi)}</span>
+                    <span>${opt}</span>
+                  </button>
+                `).join('')}
+              </div>
+              ${answered ? `
+                <div class="quiz-card__explanation ${isCorrect ? 'quiz-card__explanation--correct' : 'quiz-card__explanation--wrong'}">
+                  <strong>${isCorrect ? '✅ ¡Correcto!' : '❌ Incorrecto'}</strong>
+                  <p>${q.explanation}</p>
+                </div>
+              ` : ''}
+            </div>
+          `;
+        }).join('')}
+      </div>
+
+      <div class="quiz-section__score" id="quiz-score">
+        ${Object.keys(quizState).length === questions.length ? `
+          <div class="quiz-score-card">
+            <span class="quiz-score-card__emoji">${Object.values(quizState).filter((v, i) => v === questions[i].correctIndex).length === questions.length ? '🏆' : '📊'}</span>
+            <span class="quiz-score-card__text">
+              ${Object.values(quizState).filter((v, i) => v === questions[i].correctIndex).length} / ${questions.length} respuestas correctas
+            </span>
+          </div>
+        ` : ''}
+      </div>
+    </section>
+  `;
+}
+
+// ─── Event Setup ───────────────────────────────────────────────
+function setupDetailEvents(id: number, content: CourseContent): void {
+  // Back button
+  document.getElementById('btn-back')?.addEventListener('click', () => Router.navigate('/'));
+
+  // Complete button
+  const completedSet = new Set<number>(JSON.parse(localStorage.getItem('agy-completed') || '[]'));
   document.getElementById('btn-complete-course')?.addEventListener('click', () => {
     const btn = document.getElementById('btn-complete-course')!;
     if (completedSet.has(id)) {
@@ -267,20 +411,80 @@ export async function renderCourseDetail(id: number): Promise<void> {
     localStorage.setItem('agy-completed', JSON.stringify([...completedSet]));
   });
 
-  // Smooth scroll for TOC links
+  // View mode toggle
+  document.querySelectorAll('.view-toggle__btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const mode = (btn as HTMLElement).dataset.mode as ViewMode;
+      setViewMode(mode);
+
+      // Update toggle active state
+      document.querySelectorAll('.view-toggle__btn').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Toggle content visibility
+      document.querySelectorAll('.section-content--technical').forEach((el) => {
+        el.classList.toggle('is-visible', mode === 'technical');
+      });
+      document.querySelectorAll('.section-content--simple').forEach((el) => {
+        el.classList.toggle('is-visible', mode === 'simple');
+      });
+
+      // Toggle simple summary
+      const summary = document.getElementById('simple-summary');
+      if (summary) summary.classList.toggle('is-visible', mode === 'simple');
+    });
+  });
+
+  // TOC smooth scroll
   document.querySelectorAll('.course-detail__toc-link').forEach((link) => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
       const href = (link as HTMLAnchorElement).getAttribute('href')!;
-      const target = document.querySelector(href);
-      target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // Quiz options
+  document.querySelectorAll('.quiz-option:not(.quiz-option--disabled)').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const el = btn as HTMLElement;
+      const qi = parseInt(el.dataset.question!, 10);
+      const oi = parseInt(el.dataset.option!, 10);
+
+      setQuizAnswer(id, qi, oi);
+
+      // Re-render the quiz section to show results
+      const quizSection = document.getElementById('section-quiz');
+      if (quizSection) {
+        quizSection.outerHTML = renderQuizSection(id, content.quiz);
+        // Re-attach quiz listeners
+        attachQuizListeners(id, content);
+      }
+    });
+  });
+
+  // Copy exercise prompts
+  document.querySelectorAll('.exercise-code').forEach((block) => {
+    block.addEventListener('click', async () => {
+      const text = block.textContent?.replace(/^"|"$/g, '').trim() || '';
+      try {
+        await navigator.clipboard.writeText(text);
+        block.classList.add('copied');
+        setTimeout(() => block.classList.remove('copied'), 1500);
+      } catch {
+        // Fallback — select the text
+        const range = document.createRange();
+        range.selectNodeContents(block);
+        window.getSelection()?.removeAllRanges();
+        window.getSelection()?.addRange(range);
+      }
     });
   });
 
   // Scroll to top
   window.scrollTo({ top: 0, behavior: 'smooth' });
 
-  // Animate sections on scroll
+  // Scroll-reveal sections
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -292,6 +496,21 @@ export async function renderCourseDetail(id: number): Promise<void> {
     },
     { threshold: 0.05, rootMargin: '0px 0px -30px 0px' }
   );
+  document.querySelectorAll('.course-detail__section, .quiz-card').forEach((s) => observer.observe(s));
+}
 
-  document.querySelectorAll('.course-detail__section').forEach((s) => observer.observe(s));
+function attachQuizListeners(id: number, content: CourseContent): void {
+  document.querySelectorAll('.quiz-option:not(.quiz-option--disabled)').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const el = btn as HTMLElement;
+      const qi = parseInt(el.dataset.question!, 10);
+      const oi = parseInt(el.dataset.option!, 10);
+      setQuizAnswer(id, qi, oi);
+      const quizSection = document.getElementById('section-quiz');
+      if (quizSection) {
+        quizSection.outerHTML = renderQuizSection(id, content.quiz);
+        attachQuizListeners(id, content);
+      }
+    });
+  });
 }

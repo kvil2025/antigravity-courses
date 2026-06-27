@@ -1186,3 +1186,574 @@ body {
     padding: 1rem 0;
   }
 }
+
+
+/* ============================================
+   LEARNING PATH — Visual Progress Map
+   ============================================ */
+
+.learning-path {
+  margin: 2rem 0 3rem;
+  padding: 2rem;
+  background: rgba(52, 94, 174, 0.08);
+  border: 1px solid rgba(52, 94, 174, 0.15);
+  border-radius: 16px;
+  animation: fadeIn 0.6s ease;
+  overflow: hidden;
+}
+
+.learning-path__hero-img {
+  width: calc(100% + 4rem);
+  margin: -2rem -2rem 1.5rem -2rem;
+  height: 140px;
+  object-fit: cover;
+  display: block;
+  opacity: 0.7;
+}
+
+.learning-path__title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #b0bfcf;
+  margin: 0 0 1.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.85rem;
+}
+
+.learning-path__track {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0;
+  padding: 0.5rem;
+}
+
+.learning-path__node {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid var(--node-color, #345eae);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.learning-path__node:hover {
+  transform: scale(1.2);
+  background: var(--node-color);
+  box-shadow: 0 0 20px color-mix(in srgb, var(--node-color) 40%, transparent);
+}
+
+.learning-path__node.is-complete {
+  background: var(--node-color);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--node-color) 30%, transparent);
+}
+
+.learning-path__node-num {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #e2e8f0;
+}
+
+.learning-path__node.is-complete .learning-path__node-num {
+  color: #fff;
+}
+
+.learning-path__connector {
+  width: 24px;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(52, 94, 174, 0.3), rgba(52, 94, 174, 0.15));
+  flex-shrink: 0;
+}
+
+.learning-path__legend {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.learning-path__legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: #8b9bb4;
+  font-family: 'Inter', sans-serif;
+}
+
+.learning-path__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+
+/* ============================================
+   VIEW MODE TOGGLE — Simple / Technical
+   ============================================ */
+
+.view-toggle {
+  display: flex;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(52, 94, 174, 0.2);
+  border-radius: 12px;
+  padding: 4px;
+  margin: 1.5rem 0;
+  position: relative;
+  width: fit-content;
+}
+
+.view-toggle__btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  background: transparent;
+  color: #8b9bb4;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.view-toggle__btn.active {
+  background: rgba(52, 94, 174, 0.25);
+  color: #e2e8f0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.view-toggle__btn:hover:not(.active) {
+  color: #b0bfcf;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.view-toggle__btn svg {
+  opacity: 0.7;
+}
+
+.view-toggle__btn.active svg {
+  opacity: 1;
+}
+
+
+/* ============================================
+   CONTENT VISIBILITY — Simple vs Technical
+   ============================================ */
+
+.section-content--technical,
+.section-content--simple {
+  display: none;
+}
+
+.section-content--technical.is-visible,
+.section-content--simple.is-visible {
+  display: block;
+  animation: fadeIn 0.4s ease;
+}
+
+
+/* ============================================
+   SIMPLE SUMMARY — Course Intro Card
+   ============================================ */
+
+.simple-summary {
+  display: none;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, rgba(52, 94, 174, 0.12), rgba(34, 197, 94, 0.06));
+  border: 1px solid rgba(52, 94, 174, 0.2);
+  border-radius: 12px;
+  margin: 0 0 2rem;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.simple-summary.is-visible {
+  display: flex;
+  animation: fadeIn 0.4s ease;
+}
+
+.simple-summary__icon {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.simple-summary strong {
+  display: block;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  color: #e2e8f0;
+  margin-bottom: 0.4rem;
+}
+
+.simple-summary p {
+  font-size: 0.95rem;
+  color: #b0bfcf;
+  line-height: 1.6;
+  margin: 0;
+}
+
+
+/* ============================================
+   EXERCISE BLOCKS — Try It Yourself
+   ============================================ */
+
+.exercise-block {
+  margin: 1.5rem 0;
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(34, 197, 94, 0.04);
+}
+
+.exercise-block__header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1.2rem;
+  background: rgba(34, 197, 94, 0.1);
+  border-bottom: 1px solid rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+}
+
+.exercise-block__body {
+  padding: 1.2rem;
+}
+
+.exercise-prompt {
+  font-size: 0.9rem;
+  color: #b0bfcf;
+  margin-bottom: 0.8rem;
+}
+
+.exercise-code {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(52, 94, 174, 0.2);
+  border-radius: 8px;
+  padding: 1rem 1.2rem;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.88rem;
+  color: #22c55e;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+  margin-bottom: 0.8rem;
+}
+
+.exercise-code:hover {
+  border-color: #22c55e;
+  background: rgba(34, 197, 94, 0.05);
+}
+
+.exercise-code::after {
+  content: '📋 Click para copiar';
+  position: absolute;
+  right: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.7rem;
+  color: #8b9bb4;
+  font-family: 'Inter', sans-serif;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.exercise-code:hover::after {
+  opacity: 1;
+}
+
+.exercise-code.copied::after {
+  content: '✅ Copiado!';
+  color: #22c55e;
+  opacity: 1;
+}
+
+.exercise-success {
+  font-size: 0.88rem;
+  color: #8b9bb4;
+  padding: 0.6rem 0 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+
+/* ============================================
+   QUIZ SECTION — Comprehension Test
+   ============================================ */
+
+.quiz-section {
+  margin: 3rem 0;
+  padding: 2rem;
+  background: rgba(52, 94, 174, 0.06);
+  border: 1px solid rgba(52, 94, 174, 0.15);
+  border-radius: 16px;
+}
+
+.quiz-section__header {
+  margin-bottom: 2rem;
+}
+
+.quiz-section__subtitle {
+  font-size: 0.9rem;
+  color: #8b9bb4;
+  margin: 0.5rem 0 0;
+}
+
+.quiz-section__questions {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.quiz-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.4s ease;
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.quiz-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.quiz-card--correct {
+  border-color: rgba(34, 197, 94, 0.3);
+  background: rgba(34, 197, 94, 0.04);
+}
+
+.quiz-card--wrong {
+  border-color: rgba(239, 56, 0, 0.3);
+  background: rgba(239, 56, 0, 0.04);
+}
+
+.quiz-card__number {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  color: #345eae;
+  margin-bottom: 0.5rem;
+}
+
+.quiz-card__question {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #e2e8f0;
+  line-height: 1.5;
+  margin: 0 0 1rem;
+}
+
+.quiz-card__options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.quiz-option {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  color: #b0bfcf;
+  width: 100%;
+}
+
+.quiz-option:hover:not(.quiz-option--disabled) {
+  background: rgba(52, 94, 174, 0.15);
+  border-color: rgba(52, 94, 174, 0.3);
+  color: #e2e8f0;
+}
+
+.quiz-option--correct {
+  background: rgba(34, 197, 94, 0.12) !important;
+  border-color: rgba(34, 197, 94, 0.4) !important;
+  color: #22c55e !important;
+}
+
+.quiz-option--wrong {
+  background: rgba(239, 56, 0, 0.12) !important;
+  border-color: rgba(239, 56, 0, 0.4) !important;
+  color: #ef3800 !important;
+}
+
+.quiz-option--disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.quiz-option__letter {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+
+.quiz-option--correct .quiz-option__letter {
+  background: rgba(34, 197, 94, 0.2);
+}
+
+.quiz-option--wrong .quiz-option__letter {
+  background: rgba(239, 56, 0, 0.2);
+}
+
+.quiz-card__explanation {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  animation: fadeIn 0.4s ease;
+}
+
+.quiz-card__explanation--correct {
+  background: rgba(34, 197, 94, 0.08);
+  border: 1px solid rgba(34, 197, 94, 0.15);
+  color: #b0bfcf;
+}
+
+.quiz-card__explanation--wrong {
+  background: rgba(239, 56, 0, 0.08);
+  border: 1px solid rgba(239, 56, 0, 0.15);
+  color: #b0bfcf;
+}
+
+.quiz-card__explanation strong {
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+.quiz-card__explanation p {
+  margin: 0;
+}
+
+.quiz-score-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: 1rem;
+  background: rgba(52, 94, 174, 0.1);
+  border: 1px solid rgba(52, 94, 174, 0.2);
+  border-radius: 10px;
+  margin-top: 1.5rem;
+}
+
+.quiz-score-card__emoji {
+  font-size: 1.8rem;
+}
+
+.quiz-score-card__text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+
+/* ============================================
+   RESPONSIVE — New Components
+   ============================================ */
+
+@media (max-width: 768px) {
+  .learning-path__track {
+    gap: 4px;
+  }
+
+  .learning-path__node {
+    width: 36px;
+    height: 36px;
+  }
+
+  .learning-path__node-num {
+    font-size: 0.75rem;
+  }
+
+  .learning-path__connector {
+    width: 12px;
+  }
+
+  .learning-path__legend {
+    gap: 0.8rem;
+  }
+
+  .view-toggle {
+    width: 100%;
+  }
+
+  .view-toggle__btn {
+    flex: 1;
+    justify-content: center;
+    padding: 0.5rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .simple-summary {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .quiz-option {
+    font-size: 0.85rem;
+    padding: 0.7rem 0.8rem;
+  }
+
+  .exercise-code::after {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .learning-path__node {
+    width: 30px;
+    height: 30px;
+  }
+
+  .learning-path__node-num {
+    font-size: 0.65rem;
+  }
+
+  .learning-path__connector {
+    width: 6px;
+  }
+
+  .learning-path {
+    padding: 1rem;
+  }
+}

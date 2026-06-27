@@ -83,6 +83,38 @@ export function renderHome(): void {
       </div>
 
       <!-- Course List -->
+      <!-- Learning Path Visual -->
+      <div class="learning-path" id="learning-path">
+        <img src="/images/learning-path-hero.png" alt="Ruta de Aprendizaje" class="learning-path__hero-img" loading="lazy" />
+        <h2 class="learning-path__title">Ruta de Aprendizaje</h2>
+        <div class="learning-path__track">
+          ${courseMeta.map((c, i) => {
+            const isComplete = completedSet.has(c.id);
+            const catColors: Record<string, string> = {
+              foundations: '#22c55e',
+              intermediate: '#f59e0b',
+              advanced: '#f56d52',
+              mastery: '#ef3800',
+            };
+            const color = catColors[c.category] || '#345eae';
+            const isLast = i === courseMeta.length - 1;
+            return `
+              <a href="#/course/${c.id}" class="learning-path__node ${isComplete ? 'is-complete' : ''}" style="--node-color: ${color}" title="${c.title}">
+                <span class="learning-path__node-num">${isComplete ? '✓' : c.id}</span>
+              </a>
+              ${!isLast ? '<div class="learning-path__connector"></div>' : ''}
+            `;
+          }).join('')}
+        </div>
+        <div class="learning-path__legend">
+          <span class="learning-path__legend-item"><span class="learning-path__dot" style="background:#22c55e"></span> Fundamentos</span>
+          <span class="learning-path__legend-item"><span class="learning-path__dot" style="background:#f59e0b"></span> Intermedio</span>
+          <span class="learning-path__legend-item"><span class="learning-path__dot" style="background:#f56d52"></span> Avanzado</span>
+          <span class="learning-path__legend-item"><span class="learning-path__dot" style="background:#ef3800"></span> Maestría</span>
+        </div>
+      </div>
+
+      <!-- Course List -->
       <main class="course-list" id="course-list"></main>
 
       <!-- Footer -->
